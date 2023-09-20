@@ -1,0 +1,36 @@
+div {
+    max-width: 721px;
+    margin-left: 3rem;
+}
+h1 {
+    font-size: 144px;
+    font-family: 'Franklin Gothic Heavy', sans-serif;
+    text-align: center;
+    margin-bottom: 10px;
+    margin-top: 4rem;
+}
+h2 {
+    font-size: 46px;
+    /* text-align: center; */
+    margin-top: 10px;
+}
+h1, h2 {
+    color: red;
+}
+span {
+    font-weight: 800;
+}
+#sani {
+    font-style: italic;
+    font-weight: 500;
+}
+#order {
+    font-weight: 800;
+    font-size: 22px;
+}
+p {
+    font-size: 26px;
+}
+#red {
+    color: red;
+}

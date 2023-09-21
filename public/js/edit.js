@@ -88,7 +88,7 @@ button.addEventListener('click', async (event) => {
             const controlTextTitle = document.createElement('h3');
             const linebreak = document.createElement('br');
 
-            elemRpt.textContent = 'Action Item Detail';
+            elemRpt.textContent = 'Action Item Edit';
             elemRpt.setAttribute('class', 'header');
             elemId.textContent = 'Action Id:' + record[key]['INPUT_ID'];
             elemId.setAttribute('class', 'header2');

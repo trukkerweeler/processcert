@@ -194,27 +194,26 @@ router.get('/:id', (req, res) => {
             }
         // console.log('Connected to DB');
 
-        const query = `select c.CORRECTIVE_ID
-        , USER_DEFINED_2
-        , USER_DEFINED_1
-        , c.REQUEST_BY
-        , c.ASSIGNED_TO
-        , c.CORRECTIVE_DATE
-        , c.REFERENCE
-        , ia.CORRECTION_DATE
-        , ia.ACTION_BY
-        , cc.CREATE_DATE
-        , CLOSED
-        , c.CLOSED_DATE
-        , ct.NC_TREND
-        , ia.CORRECTION_TEXT
-        , cc.CONTROL_TEXT
-        , cc.CAUSE_TEXT
-        from CORRECTIVE c
-        left join CORRECTIVE_TREND ct on c.CORRECTIVE_ID = ct.CORRECTIVE_ID            
-        left join CORRECTION ia on c.CORRECTIVE_ID = ia.CORRECTIVE_ID
-        left join CORRECTIVE_CTRL cc on c.CORRECTIVE_ID = cc.CORRECTIVE_ID
-        where c.CORRECTIVE_ID = '${req.params.id}'`;
+        const query = `SELECT 
+        pi.INPUT_ID
+        , pi.PEOPLE_ID
+        , pi.PROJECT_ID
+        , INPUT_DATE
+        , pi.DUE_DATE
+        , pi.ASSIGNED_TO
+        , INPUT_TYPE
+        , SUBJECT
+        , pi.CLOSED
+        , pi.CLOSED_DATE
+        , pit.INPUT_TEXT
+        , pir.RESPONSE_TEXT
+        , pif.FOLLOWUP_TEXT 
+        , p.NAME
+        FROM quality.PEOPLE_INPUT pi left join PPL_INPT_TEXT pit on pi.INPUT_ID = pit.INPUT_ID
+        left join PPL_INPT_FLUP pif on pi.INPUT_ID = pif.INPUT_ID
+        left join PPL_INPT_RSPN pir on pi.INPUT_ID = pir.INPUT_ID 
+        left join PROJECT p on pi.PROJECT_ID = p.PROJECT_ID
+        where pi.INPUT_ID = '${req.params.id}'`;
 
         // console.log(query);
 

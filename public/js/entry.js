@@ -62,7 +62,7 @@ form.addEventListener('submit', async (event) => {
                 },
             body: JSON.stringify(dataJson)
         });
-        console.log('Success:', JSON.stringify(dataJson));
+        // console.log('Success:', JSON.stringify(dataJson));
         }
         catch (err) {
             console.log('Error:', err);

@@ -15,10 +15,10 @@ form.addEventListener('submit', async (event) => {
         return data;
     })
     // console.log(nextId);
-    const requestDate = new Date();
-    requestDate.setDate(requestDate.getDate())
-    let myRequestDate = requestDate.toISOString().slice(0, 19).replace('T', ' ');
-    // console.log(myRequestDate);
+    
+    let myRequestDate = new Date();
+    myRequestDate.setDate(myRequestDate.getDate());
+    myRequestDate = myRequestDate.toISOString().slice(0, 10);
 
     let due_date = new Date();
     due_date.setDate(due_date.getDate() + 14);

@@ -31,7 +31,7 @@ router.get('/', (req, res) => {
         , pit.INPUT_TEXT
         , pi.CLOSED
         , pi.CLOSED_DATE 
-        from PEOPLE_INPUT pi left join PPL_INPT_TEXT pit on pi.INPUT_ID = pit.INPUT_ID`;
+        from PEOPLE_INPUT pi left join PPL_INPT_TEXT pit on pi.INPUT_ID = pit.INPUT_ID order by pi.INPUT_ID desc`;
         
         connection.query(query, (err, rows, fields) => {
             if (err) {
@@ -54,7 +54,7 @@ router.get('/', (req, res) => {
 
 });
 
-// Get the next ID for a new expiry record
+// Get the next ID for a new record
 router.get('/nextId', (req, res) => {
     // res.json('0000005');
     try {

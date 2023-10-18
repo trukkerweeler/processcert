@@ -40,6 +40,12 @@ form.addEventListener('submit', async (event) => {
             case 'ASSIGNED_TO':
                 dataJson[field] = data.get(field).toUpperCase();
                 break;
+            case 'SUBJECT':
+                dataJson[field] = data.get(field).toUpperCase();
+                break;
+            case 'PROJECT_ID':
+                dataJson[field] = data.get(field).toUpperCase();
+                break;
             default:
                 if (field[field.length - 4] === '_DATE') {
                     let myDate = data.get(field);

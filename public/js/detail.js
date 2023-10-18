@@ -77,6 +77,15 @@ button.addEventListener('click', async (event) => {
             const reqBy = document.createElement('p');
             reqBy.textContent = 'Request By:' + ' ' + record[key]['PEOPLE_ID'];
             reqBy.setAttribute('class', 'tbl');
+
+            const due_date = document.createElement('p');
+            if (record[key]['DUE_DATE'] === null) {
+                due_date.textContent = 'Due date:' + ' ' + '';
+            }
+            else
+                due_date.textContent = 'Due date:' + ' ' + record[key]['DUE_DATE'].substring(0, 10);
+            due_date.setAttribute('class', 'tbl');
+
             const caType = document.createElement('p');
             caType.textContent = 'Type:' + ' ' + record[key]['TYPE'];
             caType.setAttribute('class', 'tbl');
@@ -90,21 +99,28 @@ button.addEventListener('click', async (event) => {
 
             elemRpt.textContent = 'Action Item Detail';
             elemRpt.setAttribute('class', 'header');
-            elemId.textContent = 'Action Id:' + record[key]['INPUT_ID'];
+            elemId.textContent = 'Action Id: ' + record[key]['INPUT_ID'];
             elemId.setAttribute('class', 'header2');
 
             detailSection.appendChild(aiDate);
             detailSection.appendChild(caAssTo);
             detailSection.appendChild(aiClosedDate);
             detailSection.appendChild(caRef);
-            detailSection.appendChild(reqBy); 
+            detailSection.appendChild(reqBy);
+            detailSection.appendChild(due_date);
 
             ncTrendTitle.textContent = 'Action:';
             elemDesc.textContent = record[key]['INPUT_TEXT'];
+            // replace the line breaks with <br> elements
+            elemDesc.innerHTML = elemDesc.innerHTML.replace(/\n/g, '<br>');            
             followupTitle.textContent = 'Follow Up:';
             elemIA.textContent = record[key]['CORRECTION_TEXT'];
+            // replace the line breaks with <br> elements
+            elemIA.innerHTML = elemIA.innerHTML.replace(/\n/g, '<br>');
             responseTitle.textContent = 'Response:';
             elemResponse.textContent = record[key]['RESPONSE_TEXT'];
+            // replace the line breaks with <br> elements
+            elemResponse.innerHTML = elemResponse.innerHTML.replace(/\n/g, '<br>');
 
             main.appendChild(elemRpt);
             main.appendChild(elemId);

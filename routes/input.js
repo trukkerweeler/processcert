@@ -147,7 +147,10 @@ router.post('/', (req, res) => {
             res.json(rows);
         });
 
-        const insertQuery = `insert into PPL_INPT_TEXT values ('${req.body.INPUT_ID}', '${req.body.INPUT_TEXT}')`;
+        
+        // escape the apostrophe
+        const inputText = req.body.INPUT_TEXT.replace(/'/g, "\\'");
+        const insertQuery = `insert into PPL_INPT_TEXT values ('${req.body.INPUT_ID}', '${inputText}')`;
         connection.query(insertQuery, (err, rows, fields) => {
             if (err) {
                 console.log('Failed to query for corrective trend insert: ' + err);

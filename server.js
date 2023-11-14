@@ -19,6 +19,9 @@ app.use((req, res, next) => {
 const inputRoutes = require("./routes/input");
 app.use("/input", inputRoutes);
 
+const projectRoutes = require("./routes/project");
+app.use("/project", projectRoutes);
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });

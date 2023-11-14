@@ -44,7 +44,7 @@ button.addEventListener('click', async (event) => {
     fetch(url, { method: 'GET' })
     .then(response => response.json())
     .then(record => {
-        console.log(record);
+        // console.log(record);
         for (const key in record) {
             const detailSection = document.createElement('section');
             detailSection.setAttribute('class', 'section');
@@ -111,6 +111,9 @@ button.addEventListener('click', async (event) => {
 
             ncTrendTitle.textContent = 'Action:';
             elemDesc.textContent = record[key]['INPUT_TEXT'];
+            // put in double backslashes
+            // elemDesc.textContent = elemDesc.textContent.replace(/\\/g, '\\\\');
+
             // replace the line breaks with <br> elements
             elemDesc.innerHTML = elemDesc.innerHTML.replace(/\n/g, '<br>');            
             followupTitle.textContent = 'Follow Up:';

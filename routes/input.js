@@ -26,12 +26,14 @@ router.get('/', (req, res) => {
 
         const query = `select pi.INPUT_ID
         , pi.INPUT_DATE
+        , pi.SUBJECT
         , pi.ASSIGNED_TO
         , pi.PROJECT_ID
         , pit.INPUT_TEXT
         , pi.CLOSED
         , pi.CLOSED_DATE 
         from PEOPLE_INPUT pi left join PPL_INPT_TEXT pit on pi.INPUT_ID = pit.INPUT_ID order by pi.INPUT_ID desc`;
+        // where USER_DEFINED_1 = 'MR'
         
         connection.query(query, (err, rows, fields) => {
             if (err) {
@@ -140,7 +142,7 @@ router.post('/', (req, res) => {
 
         connection.query(query, (err, rows, fields) => {
             if (err) {
-                console.log('Failed to query for corrective insert: ' + err);
+                console.log('Failed to query for PEOPLE_INPUT insert: ' + err);
                 res.sendStatus(500);
                 return;
             }
@@ -153,7 +155,7 @@ router.post('/', (req, res) => {
         const insertQuery = `insert into PPL_INPT_TEXT values ('${req.body.INPUT_ID}', '${inputText}')`;
         connection.query(insertQuery, (err, rows, fields) => {
             if (err) {
-                console.log('Failed to query for corrective trend insert: ' + err);
+                console.log('Failed to query for PPL_INPT_TEXT insert: ' + err);
                 res.sendStatus(500);
                 return;
             }
@@ -162,7 +164,7 @@ router.post('/', (req, res) => {
         const updateQuery = `UPDATE SYSTEM_IDS SET CURRENT_ID = '${req.body.INPUT_ID}' WHERE TABLE_NAME = 'PEOPLE_INPUT'`;
         connection.query(updateQuery, (err, rows, fields) => {
             if (err) {
-                console.log('Failed to query for corrective id update: ' + err);
+                console.log('Failed to query for system id update: ' + err);
                 res.sendStatus(500);
                 return;
             }

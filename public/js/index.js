@@ -12,42 +12,42 @@ function getRecords () {
     .then(records => {
         // console.log(records);
         const table = document.createElement('table');
-            const thead = document.createElement('thead');
-            const tbody = document.createElement('tbody');
-            const header = document.createElement('tr');
-            const td = document.createElement('td');
-            
-            for (let key in records[0]) {
-                // if (fieldList.includes(key)){
-                const th = document.createElement('th');
-                th.textContent = key;
-                header.appendChild(th);
-                // }
-            }
-            thead.appendChild(header);
+        const thead = document.createElement('thead');
+        const tbody = document.createElement('tbody');
+        const header = document.createElement('tr');
+        const td = document.createElement('td');
+        
+        for (let key in records[0]) {
+            // if (fieldList.includes(key)){
+            const th = document.createElement('th');
+            th.textContent = key;
+            header.appendChild(th);
+            // }
+        }
+        thead.appendChild(header);
 
-            for (let record of records) {
-                const tr = document.createElement('tr');
-                for (let key in record) {
-                    const td = document.createElement('td');
-                    // console.log(key.substring(key.length - 4));
-                    if (key !== null) {
-                        if (key.substring(key.length - 4) === 'DATE' && key.length > 0 && record[key] !== null) {
-                            td.textContent = record[key].slice(0,10);
-                        } else {
-                            td.textContent = record[key];
-                        }
+        for (let record of records) {
+            const tr = document.createElement('tr');
+            for (let key in record) {
+                const td = document.createElement('td');
+                // console.log(key.substring(key.length - 4));
+                if (key !== null) {
+                    if (key.substring(key.length - 4) === 'DATE' && key.length > 0 && record[key] !== null) {
+                        td.textContent = record[key].slice(0,10);
                     } else {
                         td.textContent = record[key];
-                }
-                tr.appendChild(td);
+                    }
+                } else {
+                    td.textContent = record[key];
             }
-                tbody.appendChild(tr);
-            }
+            tr.appendChild(td);
+        }
+            tbody.appendChild(tr);
+        }
 
-            table.appendChild(thead);
-            table.appendChild(tbody);
-            main.appendChild(table);
+        table.appendChild(thead);
+        table.appendChild(tbody);
+        main.appendChild(table);
     })
 }
 

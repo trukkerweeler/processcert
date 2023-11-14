@@ -221,3 +221,26 @@ h3 {
     margin-bottom: 0;
     display: inline-block;
 }
+
+.response {
+    /* column-span: 5; */
+    text-align: left;
+    /* shade the even rows */
+    /* background-color: #f2f2f2; */
+    border-bottom: #000 1px solid;
+    /* italics */
+    font-style: italic;
+
+}
+
+@media print {
+    form{
+        display: none;
+    }
+    .entryform {
+        display: none;
+    }
+    #main-nav {
+        display: none;
+    }
+}

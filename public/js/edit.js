@@ -90,7 +90,7 @@ button.addEventListener('click', async (event) => {
 
             elemRpt.textContent = 'Action Item Edit';
             elemRpt.setAttribute('class', 'header');
-            elemId.textContent = 'Action Id:' + record[key]['INPUT_ID'];
+            elemId.textContent = 'Action Id: ' + record[key]['INPUT_ID'];
             elemId.setAttribute('class', 'header2');
 
             detailSection.appendChild(aiDate);

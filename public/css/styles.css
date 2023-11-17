@@ -233,6 +233,10 @@ h3 {
 
 }
 
+.appendmodal{
+    border: #000 1px solid;
+}
+
 @media print {
     form{
         display: none;

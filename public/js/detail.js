@@ -1,5 +1,7 @@
-import { loadHeaderFooter } from './utils.mjs';
+import { loadHeaderFooter, getUserValue } from './utils.mjs';
 loadHeaderFooter();
+const user = await getUserValue();
+// console.log(user);
 
 
 const main = document.querySelector('main');
@@ -12,7 +14,7 @@ const caidValue = iid.value;
 // const url = 'http://localhost:3003/input/' + iid;
 // console.log(url);
 
-
+const editbutton = document.getElementById('editaction');
 const button = document.getElementById('actiondetailsearch');
 button.addEventListener('click', async (event) => {
     event.preventDefault();
@@ -34,10 +36,7 @@ button.addEventListener('click', async (event) => {
 
     // Delete the child nodes of the main element
     while (main.firstChild) {
-        // if (main.firstChild.nodeName === 'section') {
-            main.removeChild(main.firstChild);
-            // section.remove();
-        // }
+        main.removeChild(main.firstChild);
     }
 
 
@@ -52,9 +51,12 @@ button.addEventListener('click', async (event) => {
             const elemId = document.createElement('h2');
             
             const elemDesc = document.createElement('p');
-            const elemIA = document.createElement('p');
+            const elemFUP = document.createElement('p');
+            elemFUP.setAttribute('id', 'followup');
             const elemIaDate = document.createElement('p');
             const elemResponse = document.createElement('p');
+            elemResponse.setAttribute('id', 'response');
+
             elemIaDate.setAttribute('class', 'actiondate');
             const elemCaDate = document.createElement('p');
             elemCaDate.setAttribute('class', 'actiondate2');
@@ -111,17 +113,20 @@ button.addEventListener('click', async (event) => {
 
             ncTrendTitle.textContent = 'Action:';
             elemDesc.textContent = record[key]['INPUT_TEXT'];
+            elemDesc.setAttribute('id', 'inputtext');
             // put in double backslashes
             // elemDesc.textContent = elemDesc.textContent.replace(/\\/g, '\\\\');
 
             // replace the line breaks with <br> elements
             elemDesc.innerHTML = elemDesc.innerHTML.replace(/\n/g, '<br>');            
             followupTitle.textContent = 'Follow Up:';
-            elemIA.textContent = record[key]['CORRECTION_TEXT'];
+            elemFUP.textContent = record[key]['FOLLOWUP_TEXT'];
+            
             // replace the line breaks with <br> elements
-            elemIA.innerHTML = elemIA.innerHTML.replace(/\n/g, '<br>');
+            elemFUP.innerHTML = elemFUP.innerHTML.replace(/\n/g, '<br>');
             responseTitle.textContent = 'Response:';
             elemResponse.textContent = record[key]['RESPONSE_TEXT'];
+            
             // replace the line breaks with <br> elements
             elemResponse.innerHTML = elemResponse.innerHTML.replace(/\n/g, '<br>');
 
@@ -129,16 +134,14 @@ button.addEventListener('click', async (event) => {
             main.appendChild(elemId);
             main.appendChild(detailSection);
 
-            // detailSection.appendChild(linebreak);
             detailSection.appendChild(ncTrendTitle);
             detailSection.appendChild(elemDesc);
             detailSection.appendChild(followupTitle);
-            detailSection.appendChild(elemIA);
+            detailSection.appendChild(elemFUP);
             detailSection.appendChild(elemIaDate);
 
             detailSection.appendChild(responseTitle);
             detailSection.appendChild(elemResponse);
-
 
             detailSection.appendChild(controlTextTitle);
             detailSection.appendChild(elemCaDate);
@@ -146,4 +149,95 @@ button.addEventListener('click', async (event) => {
             main.appendChild(detailSection);
         }
     });
+    // toggle enable/disable of the edit button
+    editbutton.disabled = false;
+});
+
+const modal = document.querySelector('[data-modal]');
+// open modal on edit button click
+editbutton.addEventListener('click', (event) => {
+    event.preventDefault();
+    modal.showModal();
+});
+
+// close modal on cancel button click
+const cancel = document.querySelector('[data-close-modal]');
+cancel.addEventListener('click', () => {
+    modal.close();
+});
+
+const modalsave = document.getElementById('modalsave');
+modalsave.addEventListener('click', async (event) => {
+    event.preventDefault();
+    const iid = document.querySelector('#iid');    
+    let aidValue = iid.value;
+    if (aidValue.length === 0) {
+        alert('Please enter the Input ID');
+    } else {
+        // console.log(aidValue);
+        // console.log(aidValue.length);
+        while (aidValue.length < 7) {
+            aidValue = '0' + aidValue;
+        }
+    }
+
+    const url = 'http://localhost:3003/input/' + aidValue;
+    // console.log(url);
+
+    const inputtext = document.querySelector("#inputtext");
+    const followuptext = document.querySelector("#followup");
+    const responsetext = document.querySelector("#response");
+    let newtext = document.querySelector('#newtext').value;
+    // fix apostrophe issue
+    newtext = document.querySelector('#newtext').value.replace(/'/g, '\\\'');
+    // console.log(newtext);
+    const fieldname = document.querySelector('#fieldname');
+    // console.log(fieldname.value);
+
+    let data = {
+        INPUT_ID: aidValue
+    };
+    // console.log(data);
+
+    let compositetext = '';
+    const d = new Date();
+    const date = d.toISOString().substring(0, 10);
+    const time = d.toLocaleTimeString();
+    const mydate = date + ' ' + time;
+
+    switch (fieldname.value) {
+        case 'INPUT_TEXT':
+            // console.log('input text');
+            compositetext = user + " - " + mydate + "<br>" + newtext + "<br><br>" + inputtext.innerHTML;
+            data = { ...data, INPUT_TEXT: compositetext}
+            break;
+        case 'FOLLOWUP_TEXT':
+            // console.log('followup text');
+            compositetext = user + " - " + mydate + "<br>" + newtext + "<br><br>" + followuptext.innerHTML;
+            data = { ...data, FOLLOWUP_TEXT: compositetext}
+            break;
+        case 'RESPONSE_TEXT':
+            // console.log('response text');
+            compositetext = user + " - " + mydate + "<br>" + newtext + "<br><br>" + responsetext.innerHTML;
+            data = { ...data, RESPONSE_TEXT: compositetext}
+            break;
+        default:
+            console.log('default');
+    }
+
+    // console.log(data);
+
+    const options = {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    };
+
+    const response = await fetch(url, options);
+    const json = await response.json();
+    // console.log(json);
+    // alert('Record updated');
+    modal.close();
 });

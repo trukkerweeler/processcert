@@ -1,8 +1,6 @@
-import { loadHeaderFooter, getUserValue } from './utils.mjs';
+import { loadHeaderFooter, getUserValue, getDateTime } from './utils.mjs';
 loadHeaderFooter();
 const user = await getUserValue();
-// console.log(user);
-
 
 const main = document.querySelector('main');
 // const url = window.location.href;
@@ -15,6 +13,7 @@ const caidValue = iid.value;
 // console.log(url);
 
 const editbutton = document.getElementById('editaction');
+const closebutton = document.getElementById('closeaction');
 const button = document.getElementById('actiondetailsearch');
 button.addEventListener('click', async (event) => {
     event.preventDefault();
@@ -23,8 +22,6 @@ button.addEventListener('click', async (event) => {
     if (aidValue.length === 0) {
         alert('Please enter the Input ID');
     } else {
-        // console.log(aidValue);
-        // console.log(aidValue.length);
         while (aidValue.length < 7) {
             aidValue = '0' + aidValue;
         }
@@ -33,12 +30,10 @@ button.addEventListener('click', async (event) => {
     const url = 'http://localhost:3003/input/' + aidValue;
     // console.log(url);
 
-
     // Delete the child nodes of the main element
     while (main.firstChild) {
         main.removeChild(main.firstChild);
     }
-
 
     fetch(url, { method: 'GET' })
     .then(response => response.json())
@@ -68,11 +63,28 @@ button.addEventListener('click', async (event) => {
             caRef.textContent = 'Project:' + ' ' + record[key]['PROJECT_ID'] + ' - ' + record[key]['NAME'];
             caRef.setAttribute('class', 'tbl');
             const aiClosedDate = document.createElement('p');
-            if (record[key]['CLOSED_DATE'] === null) {
+            if (record[key]['CLOSED_DATE'] === null || record[key]['CLOSED_DATE'] === '' || record[key]['CLOSED_DATE'].length === 0) {
                 aiClosedDate.textContent = 'Closed Date:' + ' ' + '';
-            } else
+                console.log('closed date is null');
+            } else {
                 aiClosedDate.textContent = 'Closed Date:' + ' ' + record[key]['CLOSED_DATE'].substring(0, 10);
+                // enable the closebutton
+                closebutton.disabled = true;
+                console.log('closed date is NOT null');
+            }
+            // toggle display of doit if recur id is not null
+            const doit = document.querySelector('#doit');
+            if (record[key]['RECUR_ID'] !== null) {
+                doit.style.display = 'block';
+                console.log('recur id is not null');
+            } else {
+                doit.style.display = 'none';
+                console.log('recur id is null');
+            }
+
+
             aiClosedDate.setAttribute('class', 'tbl');
+
             const caAssTo = document.createElement('p');
             caAssTo.textContent = 'Assigned To:' + ' ' + record[key]['ASSIGNED_TO'];
             caAssTo.setAttribute('class', 'tbl');
@@ -130,6 +142,12 @@ button.addEventListener('click', async (event) => {
             // replace the line breaks with <br> elements
             elemResponse.innerHTML = elemResponse.innerHTML.replace(/\n/g, '<br>');
 
+            // // Manage the closed checkbox
+            // const closed = document.createElement('checkbox');
+            // // get the value of the checkbox
+            // const closedValue = record[key]['CLOSED'];
+            // console.log(closedValue);
+
             main.appendChild(elemRpt);
             main.appendChild(elemId);
             main.appendChild(detailSection);
@@ -151,6 +169,7 @@ button.addEventListener('click', async (event) => {
     });
     // toggle enable/disable of the edit button
     editbutton.disabled = false;
+    // closebutton.disabled = true;
 });
 
 const modal = document.querySelector('[data-modal]');
@@ -187,6 +206,9 @@ modalsave.addEventListener('click', async (event) => {
     const inputtext = document.querySelector("#inputtext");
     const followuptext = document.querySelector("#followup");
     const responsetext = document.querySelector("#response");
+    const closed = document.querySelector("#appendcheckbox");
+    // console.log(">>>>>>>>>>>>>>>>>>");
+    // console.log(closed);
     let newtext = document.querySelector('#newtext').value;
     // fix apostrophe issue
     newtext = document.querySelector('#newtext').value.replace(/'/g, '\\\'');
@@ -218,14 +240,24 @@ modalsave.addEventListener('click', async (event) => {
             break;
         case 'RESPONSE_TEXT':
             // console.log('response text');
-            compositetext = user + " - " + mydate + "<br>" + newtext + "<br><br>" + responsetext.innerHTML;
+            if (responsetext.innerHTML !== null) {
+                compositetext = user + " - " + mydate + "<br>" + newtext + "<br><br>";
+            } else
+                compositetext = responsetext.innerHTML;
             data = { ...data, RESPONSE_TEXT: compositetext}
             break;
+        
         default:
             console.log('default');
     }
+    console.log(typeof closed)
+    if (closed.checked) {
+            data = { ...data, CLOSED: "Y"}
+        } else {
+            data = { ...data, CLOSED: "N"}
+        }
 
-    // console.log(data);
+    console.log(data);
 
     const options = {
         method: 'PUT',
@@ -240,4 +272,44 @@ modalsave.addEventListener('click', async (event) => {
     // console.log(json);
     // alert('Record updated');
     modal.close();
+});
+
+// close action item
+const closeaction = document.getElementById('closeaction');
+closeaction.addEventListener('click', async (event) => {
+    event.preventDefault();
+    const iid = document.querySelector('#iid');    
+    let aidValue = iid.value;
+    if (aidValue.length === 0) {
+        alert('Please enter the Input ID');
+    } else {
+        // console.log(aidValue);
+        // console.log(aidValue.length);
+        while (aidValue.length < 7) {
+            aidValue = '0' + aidValue;
+        }
+    }
+
+    const url = 'http://localhost:3003/input/close/' + aidValue;
+    // console.log(url);
+
+    let data = {
+        INPUT_ID: aidValue,
+        CLOSED: 'Y',
+        CLOSED_DATE: getDateTime()
+    };
+
+    const options = {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    };
+
+    const response = await fetch(url, options);
+    const json = await response.json();
+    // console.log(json);
+    alert('Record updated');
+    // modal.close();
 });

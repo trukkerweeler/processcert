@@ -32,3 +32,16 @@ export async function getUserValue() {
     // return data.user;
     return "TKENT";
   }
+
+  // return datetime in format YYYY-MM-DD HH:MM:SS
+export function getDateTime() {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const dayOfMonth = date.getDate();
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const seconds = date.getSeconds();
+  
+    return `${year}-${month}-${dayOfMonth} ${hours}:${minutes}:${seconds}`;
+  }

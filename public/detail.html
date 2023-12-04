@@ -16,11 +16,12 @@
     <h1>Detail</h1>
     <form>
         <label for="search">Enter Action Id:</label>
-        <input type="text" name="search" id="iid" value="37">
+        <input type="text" name="search" id="iid" value="147">
         <button type="submit" id="actiondetailsearch">Search</button>
         <button type="submit" id="editaction" disabled>Append</button>
+        <button type="submit" id="closeaction">Close</button>
     </form>
-
+    <div id="doit"></div>
     <dialog data-modal>
         <div>Append field - choose field:</div>
         <form class="appendmodal">
@@ -29,6 +30,8 @@
                 <option value="RESPONSE_TEXT" selected>Response</option>
             </select>
             
+            <label for="appendcheckbox" id="appendcheckboxlabel">Close AI:</label>
+            <input type="checkbox" id="appendcheckbox" name="appendcheckbox" value="append">
             <input type="textarea" id="newtext">
             <button type="submit" formmethod="dialog">Cancel</button>
             <button id="modalsave" type="submit">Save</button>

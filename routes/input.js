@@ -208,17 +208,19 @@ router.get('/:id', (req, res) => {
         , pi.DUE_DATE
         , pi.ASSIGNED_TO
         , INPUT_TYPE
-        , SUBJECT
+        , pi.SUBJECT
         , pi.CLOSED
         , pi.CLOSED_DATE
         , pit.INPUT_TEXT
         , pir.RESPONSE_TEXT
         , pif.FOLLOWUP_TEXT 
         , p.NAME
+        , pirc.RECUR_ID
         FROM quality.PEOPLE_INPUT pi left join PPL_INPT_TEXT pit on pi.INPUT_ID = pit.INPUT_ID
         left join PPL_INPT_FLUP pif on pi.INPUT_ID = pif.INPUT_ID
         left join PPL_INPT_RSPN pir on pi.INPUT_ID = pir.INPUT_ID 
         left join PROJECT p on pi.PROJECT_ID = p.PROJECT_ID
+        left join PPL_INPT_RCUR pirc on pi.USER_DEFINED_2 = pirc.RECUR_ID
         where pi.INPUT_ID = '${req.params.id}'`;
 
         // console.log(query);
@@ -290,7 +292,7 @@ router.put('/:id', (req, res) => {
         // console.log(query);
         connection.query(query, (err, rows, fields) => {
             if (err) {
-                console.log('Failed to query for corrective actions: ' + err);
+                console.log('Failed to query for input : ' + err);
                 res.sendStatus(500);
                 return;
             }
@@ -306,6 +308,47 @@ router.put('/:id', (req, res) => {
 
 });
 
+// CLOSE THE INPUT<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+router.put('/close/:id', (req, res) => {
+    // console.log("Params: " + req.params.id);
+    // console.log(req.body);
+    let mytable = '';
+    let appended = '';
+    const myfield = Object.keys (req.body) [1]
+    
+    try {
+        const connection = mysql.createConnection({
+            host: process.env.DB_HOST,
+            user: process.env.DB_USER,
+            password: process.env.DB_PASS,
+            port: 3306,
+            database: 'quality'
+        });
+        connection.connect(function(err) {
+            if (err) {
+                console.error('Error connecting: ' + err.stack);
+                return;
+            }
+        const query = `UPDATE PEOPLE_INPUT SET CLOSED = 'Y', CLOSED_DATE = '${req.body.CLOSED_DATE}' WHERE INPUT_ID = '${req.params.id}'`;
+        // console.log(query);
+
+        connection.query(query, (err, rows, fields) => {
+            if (err) {
+                console.log('Failed to query for input : ' + err);
+                res.sendStatus(500);
+                return;
+            }
+            res.json(rows);
+        });
+    
+        connection.end();
+        });
+    } catch (err) {
+        console.log('Error connecting to Db 345');
+        return;
+    }
+
+});
 
 
 module.exports = router;

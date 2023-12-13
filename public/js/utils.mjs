@@ -27,10 +27,9 @@ export async function loadHeaderFooter(){
 
   // get user value from config.json file
 export async function getUserValue() {
-    // const res = await fetch('config.json');
-    // const data = await res.json();
-    // return data.user;
-    return "TKENT";
+    const res = await fetch("../js/config.json");
+    const data = await res.json();
+    return data.user;
   }
 
   // return datetime in format YYYY-MM-DD HH:MM:SS

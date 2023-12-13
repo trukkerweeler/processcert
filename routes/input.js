@@ -247,7 +247,7 @@ router.put('/:id', (req, res) => {
     // console.log(req.body);
     let mytable = '';
     let appended = '';
-    const myfield = Object.keys (req.body) [1]
+    const myfield = Object.keys (req.body) [2]
     // console.log(myfield);
     switch (myfield) {
         case 'RESPONSE_TEXT':
@@ -289,7 +289,7 @@ router.put('/:id', (req, res) => {
         const query = `REPLACE INTO ${mytable} SET 
         INPUT_ID = '${req.params.id}',
         ${myfield} = '${appended}'`;
-        // console.log(query);
+        console.log(query);
         connection.query(query, (err, rows, fields) => {
             if (err) {
                 console.log('Failed to query for input : ' + err);

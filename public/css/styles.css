@@ -307,6 +307,10 @@ h3 {
     z-index: -1;
 }
 
+.header3 {
+    padding-bottom: 0px;
+}
+
 @media print {
     form{
         display: none;

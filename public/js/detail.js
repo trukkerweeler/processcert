@@ -1,4 +1,6 @@
 import { loadHeaderFooter, getUserValue, getDateTime } from './utils.mjs';
+
+
 loadHeaderFooter();
 const user = await getUserValue();
 
@@ -106,8 +108,11 @@ button.addEventListener('click', async (event) => {
            
 
             const ncTrendTitle = document.createElement('h3');
+            ncTrendTitle.setAttribute('class', 'header3');
             const followupTitle = document.createElement('h3');
+            followupTitle.setAttribute('class', 'header3');
             const responseTitle = document.createElement('h3');
+            responseTitle.setAttribute('class', 'header3');
             const controlTextTitle = document.createElement('h3');
             const linebreak = document.createElement('br');
 
@@ -217,7 +222,8 @@ modalsave.addEventListener('click', async (event) => {
     // console.log(fieldname.value);
 
     let data = {
-        INPUT_ID: aidValue
+        INPUT_ID: aidValue,
+        INPUT_USER: getUserValue(),
     };
     // console.log(data);
 
@@ -269,8 +275,8 @@ modalsave.addEventListener('click', async (event) => {
 
     const response = await fetch(url, options);
     const json = await response.json();
-    // console.log(json);
-    // alert('Record updated');
+    const button = document.getElementById('actiondetailsearch');
+    button.click();    
     modal.close();
 });
 

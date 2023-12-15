@@ -289,7 +289,7 @@ router.put('/:id', (req, res) => {
         const query = `REPLACE INTO ${mytable} SET 
         INPUT_ID = '${req.params.id}',
         ${myfield} = '${appended}'`;
-        console.log(query);
+        // console.log(query);
         connection.query(query, (err, rows, fields) => {
             if (err) {
                 console.log('Failed to query for input : ' + err);

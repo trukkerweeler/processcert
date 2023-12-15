@@ -318,4 +318,7 @@ closeaction.addEventListener('click', async (event) => {
     // console.log(json);
     alert('Record updated');
     // modal.close();
+    // refresh the page
+    const button = document.getElementById('actiondetailsearch');
+    button.click();
 });

@@ -27,6 +27,7 @@
     margin: 0 auto;
     display: block;
     margin-bottom: 10px;
+    margin-top: 10px;
     border-radius: .75rem;
 }
 section {
@@ -141,6 +142,18 @@ table tbody tr:nth-child(even) {
 
 #detailTable {
     grid-column: span 3;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    transition: var(--transition);
+
 }
 
 .tbl {
@@ -310,6 +323,16 @@ h3 {
 .header3 {
     padding-bottom: 0px;
 }
+#header{
+    position: fixed;
+    height: 158px;
+    background-color: #A91730;
+    width: 100%;
+}
+#logo {
+    padding: 20px;
+}
+
 
 @media print {
     form{

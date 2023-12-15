@@ -247,7 +247,7 @@ modalsave.addEventListener('click', async (event) => {
         case 'RESPONSE_TEXT':
             // console.log('response text');
             if (responsetext.innerHTML !== null) {
-                compositetext = user + " - " + mydate + "<br>" + newtext + "<br><br>";
+                compositetext = user + " - " + mydate + "<br>" + newtext + "<br><br>" + responsetext.innerHTML;
             } else
                 compositetext = responsetext.innerHTML;
             data = { ...data, RESPONSE_TEXT: compositetext}

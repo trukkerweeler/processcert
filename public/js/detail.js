@@ -37,6 +37,9 @@ button.addEventListener('click', async (event) => {
         main.removeChild(main.firstChild);
     }
 
+    // enable the close button
+    closebutton.disabled = false;
+
     fetch(url, { method: 'GET' })
     .then(response => response.json())
     .then(record => {

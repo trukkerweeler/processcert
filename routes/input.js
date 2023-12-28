@@ -31,6 +31,7 @@ router.get('/', (req, res) => {
         , pi.ASSIGNED_TO
         , pi.PROJECT_ID
         , pit.INPUT_TEXT
+        , pi.DUE_DATE
         , pi.CLOSED
         , pi.CLOSED_DATE 
         from PEOPLE_INPUT pi left join PPL_INPT_TEXT pit on pi.INPUT_ID = pit.INPUT_ID order by pi.INPUT_ID desc`;
@@ -152,7 +153,9 @@ router.post('/', (req, res) => {
 
         
         // escape the apostrophe
-        const inputText = req.body.INPUT_TEXT.replace(/'/g, "\\'");
+        let inputText = req.body.INPUT_TEXT.replace(/'/g, "\\'");
+        // escape the backslash
+        inputText = req.body.INPUT_TEXT.replace(/\\/g, "\\\\");
         const insertQuery = `insert into PPL_INPT_TEXT values ('${req.body.INPUT_ID}', '${inputText}')`;
         connection.query(insertQuery, (err, rows, fields) => {
             if (err) {

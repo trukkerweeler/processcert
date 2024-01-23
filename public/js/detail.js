@@ -259,14 +259,14 @@ modalsave.addEventListener('click', async (event) => {
         default:
             console.log('default');
     }
-    console.log(typeof closed)
-    if (closed.checked) {
-            data = { ...data, CLOSED: "Y"}
-        } else {
-            data = { ...data, CLOSED: "N"}
-        }
+    // console.log(typeof closed)
+    // if (closed.checked) {
+    //         data = { ...data, CLOSED: "Y"}
+    //     } else {
+    //         data = { ...data, CLOSED: "N"}
+    //     }
 
-    console.log(data);
+    // console.log(data);
 
     const options = {
         method: 'PUT',

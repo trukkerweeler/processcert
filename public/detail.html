@@ -21,7 +21,10 @@
         <button type="submit" id="editaction" disabled>Append</button>
         <button type="submit" id="closeaction">Close</button>
     </form>
-    <div id="doit"></div>
+    <div id="stamp">
+        <div id="doit"></div>
+        <p id="inspectiondate">DATE:</p>
+    </div>
     <dialog data-modal>
         <div>Append field - choose field:</div>
         <form class="appendmodal">
@@ -30,8 +33,8 @@
                 <option value="RESPONSE_TEXT" selected>Response</option>
             </select>
             
-            <label for="appendcheckbox" id="appendcheckboxlabel">Close AI:</label>
-            <input type="checkbox" id="appendcheckbox" name="appendcheckbox" value="append">
+            <!-- <label for="appendcheckbox" id="appendcheckboxlabel">Close AI:</label>
+            <input type="checkbox" id="appendcheckbox" name="appendcheckbox" value="append"> -->
             <input type="textarea" id="newtext">
             <button type="submit" formmethod="dialog">Cancel</button>
             <button id="modalsave" type="submit">Save</button>

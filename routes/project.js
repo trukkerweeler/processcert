@@ -5,10 +5,52 @@ const router = express.Router();
 const mysql = require('mysql');
 
 
+// Get all records
+router.get('/', (req, res) => {
+    // console.log(req.params.id);
+    try {
+        const connection = mysql.createConnection({
+            host: process.env.DB_HOST,
+            user: process.env.DB_USER,
+            password: process.env.DB_PASS,
+            port: 3306,
+            database: 'quality'
+        });
+        connection.connect(function(err) {
+            if (err) {
+                console.error('Error connecting: ' + err.stack);
+                return;
+            }
+        // console.log('Connected to DB');
+
+        const query = `select * from PROJECT`;
+
+        // console.log(query);
+
+        connection.query(query, (err, rows, fields) => {
+            if (err) {
+                console.log('Failed to query for corrective actions: ' + err);
+                res.sendStatus(500);
+                return;
+            }
+            res.json(rows);
+        });
+
+        connection.end();
+        });
+    } catch (err) {
+        console.log('Error connecting to Db 83');
+        return;
+    }
+
+});
+
+
+
 // ==================================================
 // Get a single record
 router.get('/:id', (req, res) => {
-    console.log(req.params.id);
+    // console.log(req.params.id);
     try {
         const connection = mysql.createConnection({
             host: process.env.DB_HOST,

@@ -13,14 +13,13 @@
 </head>
 <body>
     <header id="header"></header>
-    <h1>Detail</h1>
-    <form>
+    <!-- <form>
         <label for="search">Enter Action Id:</label>
-        <input type="text" name="search" id="iid" value="144">
+        <input type="text" name="search" id="iid" value="144"> 
         <button type="submit" id="actiondetailsearch">Search</button>
-        <button type="submit" id="editaction" disabled>Append</button>
+        <button type="submit" id="editaction">Append</button>
         <button type="submit" id="closeaction">Close</button>
-    </form>
+    </form> -->
     <div id="stamp">
         <div id="doit"></div>
         <p id="inspectiondate">DATE:</p>
@@ -31,11 +30,7 @@
             <select name="fieldname" id="fieldname">
                 <option value="FOLLOWUP_TEXT" selected>Follow up</option>
                 <option value="RESPONSE_TEXT" selected>Response</option>
-            </select>
-            
-            <!-- <label for="appendcheckbox" id="appendcheckboxlabel">Close AI:</label>
-            <input type="checkbox" id="appendcheckbox" name="appendcheckbox" value="append"> -->
-            <input type="textarea" id="newtext">
+            </select><input type="textarea" id="newtext">
             <button type="submit" formmethod="dialog">Cancel</button>
             <button id="modalsave" type="submit">Save</button>
         </form>
@@ -47,5 +42,5 @@
     </main>
     <footer id="footer"></footer>
 </body>
-<script type="module" src="/js/detail.js"></script>
+<script type="module" src="/js/input.js"></script>
 </html>

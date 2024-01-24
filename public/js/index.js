@@ -35,7 +35,11 @@ function getRecords () {
                     if (key.substring(key.length - 4) === 'DATE' && key.length > 0 && record[key] !== null) {
                         td.textContent = record[key].slice(0,10);
                     } else {
-                        td.textContent = record[key];
+                        if (key == 'INPUT_ID') {
+                            td.innerHTML = `<a href="http://localhost:3003/input.html?id=${record[key]}">${record[key]}</a>`;
+                        } else {
+                            td.textContent = record[key];
+                        }
                     }
                 } else {
                     td.textContent = record[key];

@@ -5,6 +5,8 @@ const router = express.Router();
 const mysql = require('mysql');
 
 
+
+
 // Get all records
 router.get('/', (req, res) => {
     // console.log(req.params.id);

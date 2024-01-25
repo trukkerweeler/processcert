@@ -1,5 +1,6 @@
 import { loadHeaderFooter } from './utils.mjs';
 loadHeaderFooter();
+const skippers = ['ENTITY_ID', 'MODIFIED_DATE', 'MODIFIED_BY', 'COST_SAVINGS']
 
 const url = 'http://localhost:3003/project';
 
@@ -18,7 +19,7 @@ function getRecords () {
         const td = document.createElement('td');
         
         for (let key in records[0]) {
-            if (!['ENTITY_ID'].includes(key)){
+            if (!skippers.includes(key)){
             const th = document.createElement('th');
             th.textContent = key;
             header.appendChild(th);
@@ -30,8 +31,8 @@ function getRecords () {
             const tr = document.createElement('tr');
             for (let key in record) {
                 const td = document.createElement('td');
-                console.log(key);
-                if (!['ENTITY_ID'].includes(key)) {
+                // console.log(key);
+                if (!skippers.includes(key)) {
                     if (key !== null) {
                         if (key.substring(key.length - 4) === 'DATE' && key.length > 0 && record[key] !== null) {
                             td.textContent = record[key].slice(0,10);

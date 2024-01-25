@@ -1,18 +1,11 @@
 import { loadHeaderFooter, getUserValue, getDateTime } from './utils.mjs';
 
-
 loadHeaderFooter();
 const user = await getUserValue();
 
 const main = document.querySelector('main');
-// const url = window.location.href;
-// const id = url.split('=')[1];
-// console.log(id);
 const iid = document.querySelector('#iid');
 const caidValue = iid.value;
-// console.log(iid);
-// const url = 'http://localhost:3003/input/' + iid;
-// console.log(url);
 
 const editbutton = document.getElementById('editaction');
 const closebutton = document.getElementById('closeaction');
@@ -30,7 +23,6 @@ button.addEventListener('click', async (event) => {
     }
 
     const url = 'http://localhost:3003/input/' + aidValue;
-    // console.log(url);
 
     // Delete the child nodes of the main element
     while (main.firstChild) {

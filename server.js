@@ -22,6 +22,9 @@ app.use("/input", inputRoutes);
 const projectRoutes = require("./routes/project");
 app.use("/project", projectRoutes);
 
-app.listen(port, () => {
+const userRoutes = require("./routes/user");
+app.use("/user", userRoutes);
+
+app.listen(port, async() => {
   console.log(`Example app listening at http://localhost:${port}`);
 });

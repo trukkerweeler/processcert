@@ -180,6 +180,11 @@ body {
 } */
 
 #main-nav {
+    /* position: relative; */
+    /* overflow: hidden; */
+    /* display: grid;
+    grid-template-columns: 1fr 1fr 1fr; */
+    display: flex;
     background-color: var(--primary-color);
     color: var(--text-color-light);
     padding: 0.5rem;
@@ -188,6 +193,14 @@ body {
     box-shadow: var(--shadow);
     transition: var(--transition);
 }
+
+#login {
+    margin-top: 0;
+    margin-left: auto;
+    text-align: right;
+
+}
+
 #main-nav a {
     color: var(--text-color-light);
     text-decoration: none;

@@ -9,6 +9,7 @@ const caidValue = iid.value;
 
 const editbutton = document.getElementById('editaction');
 const closebutton = document.getElementById('closeaction');
+
 const button = document.getElementById('actiondetailsearch');
 button.addEventListener('click', async (event) => {
     event.preventDefault();

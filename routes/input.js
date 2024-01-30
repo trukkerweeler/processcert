@@ -39,7 +39,7 @@ router.get('/', (req, res) => {
         
         connection.query(query, (err, rows, fields) => {
             if (err) {
-                console.log('Failed to query for corrective actions: ' + err);
+                console.log('Failed to query for inputs: ' + err);
                 res.sendStatus(500);
                 return;
             }
@@ -49,8 +49,6 @@ router.get('/', (req, res) => {
         connection.end();
         });
     
-
-    // res.send('Hello Corrective!');
     } catch (err) {
         console.log('Error connecting to Db');
         return;

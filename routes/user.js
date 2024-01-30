@@ -6,7 +6,7 @@ const mysql = require('mysql');
 const bcrypt = require("bcrypt");
 
 // Create a record
-router.post('/', async (req, res) => {
+router.post('/:id', async (req, res) => {
     try {
         passwordToString = req.body.password.toString();
         const hashedPassword = await bcrypt.hash(passwordToString, 10)
@@ -49,9 +49,9 @@ router.post('/', async (req, res) => {
 );
 
 // // verify login credentials
-router.get('/login', async (req, res) => {
-    const dbuser = '';
-    const dbpass = '';
+router.post('/login', async (req, res) => {
+    // console.log(req.body);
+
     try {
         const connection = mysql.createConnection({
             host: process.env.DB_HOST,
@@ -68,41 +68,36 @@ router.get('/login', async (req, res) => {
         const query = `select * from APPLICATION_USER where USER_ID = '${req.body.username}'`;
         connection.query(query, (err, rows, fields) => {
             if (err) {
-                console.log('Failed to query for USER get: ' + err);
-                res.sendStatus(500);
+                res.sendStatus(400).send("Cannot connect");
                 return;
             }
             if (rows.length == 0) {
-                res.sendStatus(500).send('User not found');
+                res.sendStatus(400).send("Cannot find user");
+
                 return;
             } else {
                 dbuser = rows[0].USER_ID;
                 dbpass = rows[0].USER_PWD;
+                console.log(dbuser);
+                console.log(dbpass);
+                // res.json(rows);
+                try {
+                if (bcrypt.compare(req.body.password, dbpass)) {
+                    res.send('Success');
+                }
+                else {
+                    res.status(500).send('Not Allowed');
+                }
+            } catch {
+                res.status(500).send('dunno');                
+
             }
-        });
-        
-        console.log(dbuser);
-        console.log(dbpass);
-        // res.json(rows);
-        connection.end();
-        });
-
-    } catch (err) {
-        console.log(err);
-    }
-    // window.alert(dbuser);
-
-    // console.log(req.body.username);
-    // console.log(req.body.password);
-    // console.log(dbuser);
-    // console.log(dbpass);
-
-    try {
-        if (await bcrypt.compare(req.body.password, dbpass)) {
-            res.send('Success');
-        } else {
-            res.send('Not Allowed');
         }
+        })
+        connection.end();
+        }
+        );        
+
     } catch (err) {
         console.log(err);
     }

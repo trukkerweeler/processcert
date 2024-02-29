@@ -9,7 +9,7 @@ router.post('/', async (req, res) => {
     const sql = `INSERT INTO PPL_INPT_RCUR (RECUR_ID, INPUT_ID, ASSIGNED_TO, FREQUENCY, SUBJECT, STATUS) VALUES (?, ?, ?, ?, ?, ?)`;
     const inserts = [req.body['RECUR_ID'], req.body['INPUT_ID'], req.body['ASSIGNED_TO'], req.body['FREQUENCY'], req.body['SUBJECT'], req.body['STATUS']];  
     const query = mysql.format(sql, inserts);
-    console.log(query);
+    // console.log(query);
     try {
         const connection = mysql.createConnection({
             host: process.env.DB_HOST,
@@ -23,7 +23,7 @@ router.post('/', async (req, res) => {
                 console.error('Error connecting: ' + err.stack);
                 return;
             }
-        console.log('Connected to DB 26');
+        // console.log('Connected to DB 26');
         connection.query(query, (err, rows, fields) => {
             if (err) {
                 console.log('Failed to query for corrective action: ' + err);

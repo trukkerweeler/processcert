@@ -51,15 +51,24 @@ button.addEventListener('click', async (event) => {
             elemResponse.setAttribute('id', 'response');
 
             elemIaDate.setAttribute('class', 'actiondate');
-            const elemCaDate = document.createElement('p');
-            elemCaDate.setAttribute('class', 'actiondate2');
+            // const elemCaDate = document.createElement('p');
+            // elemCaDate.setAttribute('class', 'actiondate2');
             const elemCC = document.createElement('p');
+            elemCC.setAttribute('class', 'help');
             const aiDate = document.createElement('p');
-            aiDate.textContent = 'Request Date:' + ' ' + record[key]['INPUT_DATE'].substring(0, 10);
+            if (record[key]['DUE_DATE'] === null) {
+                aiDate.textContent = 'Request Date:' + ' ' + record[key]['INPUT_DATE'].substring(0, 10) + '\n';
+            } else {
+            aiDate.innerText = 'Request Date:' + ' ' + record[key]['INPUT_DATE'].substring(0, 10) + '\n' + 'Due date:' + ' ' + record[key]['DUE_DATE'].substring(0, 10);
+            }
             aiDate.setAttribute('class', 'tbl');
-            const caRef = document.createElement('p');
-            caRef.textContent = 'Project:' + ' ' + record[key]['PROJECT_ID'] + ' - ' + record[key]['NAME'];
-            caRef.setAttribute('class', 'tbl');
+            const aiProj = document.createElement('p');
+            aiProj.textContent = 'Project:' + ' ' + record[key]['PROJECT_ID'] + ' - ' + record[key]['NAME'];
+            aiProj.setAttribute('class', 'tbl');
+            const aiSubject = document.createElement('p');
+            aiSubject.textContent = 'Subject:' + ' ' + record[key]['SUBJECT'];
+            aiSubject.setAttribute('class', 'tbl');
+
             const aiClosedDate = document.createElement('p');
             if (record[key]['CLOSED_DATE'] === null || record[key]['CLOSED_DATE'] === '' || record[key]['CLOSED_DATE'].length === 0) {
                 aiClosedDate.textContent = 'Closed Date:' + ' ' + '';
@@ -120,9 +129,10 @@ button.addEventListener('click', async (event) => {
             detailSection.appendChild(aiDate);
             detailSection.appendChild(caAssTo);
             detailSection.appendChild(aiClosedDate);
-            detailSection.appendChild(caRef);
+            detailSection.appendChild(aiProj);
             detailSection.appendChild(reqBy);
-            detailSection.appendChild(due_date);
+            detailSection.appendChild(aiSubject);
+            // detailSection.appendChild(aiProj);
 
             ncTrendTitle.textContent = 'Action:';
             elemDesc.textContent = record[key]['INPUT_TEXT'];
@@ -163,7 +173,7 @@ button.addEventListener('click', async (event) => {
             detailSection.appendChild(elemResponse);
 
             detailSection.appendChild(controlTextTitle);
-            detailSection.appendChild(elemCaDate);
+            // detailSection.appendChild(elemCaDate);
             detailSection.appendChild(elemCC);
             main.appendChild(detailSection);
         }

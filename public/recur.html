@@ -9,18 +9,18 @@
     <link  rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Abel&family=Tapestry&display=swap">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="icon" href="images/ci-logo.png">
-    <title>Input - Entry</title>
+    <title>Recurring Input - Entry</title>
 </head>
 <body>
     <header id="header"></header>
-    <h1>Add Input</h1>
+    <h1>Add Recurring Input</h1>
     <main id="main">
         <form action="submit" name="form" id="entryform">
             <label for="INPUT_ID">Master Input Id</label>
             <input type="text" name="INPUT_ID" id="iid">
             <label for="ASSIGNED_TO">Assignee</label>
             <input type="text" name="ASSIGNED_TO" id="assto" placeholder="Enter assigned ID">
-            <label for="corType">Input Type</label>
+            <label for="corType">Frequency</label>
             <select name="FREQUENCY" id="freq">
                 <option value="W" selected>Weekly</option>
                 <option value="O">Bi-Monthly (Odd)</option>
@@ -29,10 +29,11 @@
                 <option value="A">Annually</option>
             </select>
             <label for="SUBJECT">Subject</label>
-            <input type="text" name="SUBJECT" id="subject" placeholder="Enter subject">                                
+            <input type="text" name="SUBJECT" id="subject" placeholder="Enter subject code">                                
             
             <input type="submit" value="Submit" id="btnRecurs">
         </form>
+        <table id="view"></table>
     </main>
     <footer id="footer"></footer>
 </body>

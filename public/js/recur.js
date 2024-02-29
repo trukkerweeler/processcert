@@ -25,13 +25,14 @@ form.addEventListener('submit', async (event) => {
         STATUS: 'A',
     };
     for (let field of data.keys()) {
-        if (field in ['REQUEST_BY', 'ASSIGNED_TO', 'SUBJECT']) {
+        const uppercasing = ['REQUEST_BY', 'ASSIGNED_TO', 'SUBJECT'];
+        if ( uppercasing.includes(field)){
             dataJson[field] = data.get(field).toUpperCase();
         } else {
             dataJson[field] = data.get(field);
         }
     }
-    console.log(dataJson);
+    // console.log(dataJson);
 
     try {
         await fetch(url, {

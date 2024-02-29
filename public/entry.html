@@ -15,7 +15,11 @@
     <header id="header"></header>
     <h1>Add Input</h1>
     <main id="main">
-        <form action="submit" name="form" id="entryform">
+        <form action="submit" name="form" id="entryform" class="dataentry">
+            <label for="INPUT_DATE">Action Date</label>
+            <input type="date" name="INPUT_DATE" id="INPUT_DATE" placeholder="Enter action date">
+            <label for="DUE_DATE">Due Date</label>
+            <input type="date" name="DUE_DATE" id="DUE_DATE" placeholder="Enter due date">
             <label for="PEOPLE_ID">Requestor</label>
             <input type="text" name="PEOPLE_ID" id="reqby" placeholder="Enter requestor ID">
             <label for="ASSIGNED_TO">Assignee</label>

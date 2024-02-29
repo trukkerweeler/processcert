@@ -6,7 +6,6 @@ const mysql = require('mysql');
 
 
 
-
 // Get all records
 router.get('/', (req, res) => {
     // console.log(req.params.id);
@@ -109,6 +108,43 @@ router.get('/:id', (req, res) => {
         return;
     }
 
+});
+
+// ==================================================
+router.post('/', (req, res) => {
+    // console.log(req.body);
+    const data = req.body;
+    console.log(data);
+    const connection = mysql.createConnection({
+        host: process.env.DB_HOST,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASS,
+        port: 3306,
+        database: 'quality'
+    });
+    connection.connect(function(err) {
+        if (err) {
+            console.error('Error connecting: ' + err.stack);
+            return;
+        }
+    // console.log('Connected to DB');
+
+    const query = `insert into PROJECT (PROJECT_ID, NAME, LEADER, PROJECT_TYPE, CREATE_DATE, CREATE_BY, CLOSED) 
+    values ('${data.PROJECT_ID}', '${data.NAME}', '${data.LEADER}', '${data.PROJECT_TYPE}', '${data.CREATE_DATE}', '${data.CREATE_BY}', '${data.CLOSED}')`;
+
+    console.log(query);
+
+    connection.query(query, (err, rows, fields) => {
+        if (err) {
+            console.log('Failed to query for corrective actions: ' + err);
+            res.sendStatus(500);
+            return;
+        }
+        res.json(rows);
+    });
+
+    connection.end();
+    });
 });
 
 module.exports = router;

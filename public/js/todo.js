@@ -3,13 +3,17 @@ import { loadHeaderFooter, getUserValue, getDateTime } from './utils.mjs';
 loadHeaderFooter();
 const user = await getUserValue();
 
+// Default the ASSIGNED_TO field to the current user
+document.getElementById('ASSIGNED_TO').value = user;
+
 const main = document.querySelector('main');
 const iid = document.querySelector('#iid');
-const pid = ASSIGNED_TO.value;
 
-const button = document.getElementById('actiondetailsearch');
+const button = document.getElementById('todoButton');
 button.addEventListener('click', async (event) => {
     event.preventDefault();
+    // const pid = ASSIGNED_TO.value;
+
     let personid = document.getElementById('ASSIGNED_TO').value;
     // change personid to uppercase
     personid = personid.toUpperCase();

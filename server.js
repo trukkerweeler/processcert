@@ -31,6 +31,9 @@ app.use("/user", userRoutes);
 const recurRoutes = require("./routes/recur");
 app.use("/recur", recurRoutes);
 
+const todoRoutes = require("./routes/todo");
+app.use("/todo", todoRoutes);
+
 app.listen(port, async() => {
   // console.log(`Example app listening at http://localhost:${port}`);
 });

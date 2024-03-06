@@ -51,10 +51,7 @@ button.addEventListener('click', async (event) => {
             elemResponse.setAttribute('id', 'response');
 
             elemIaDate.setAttribute('class', 'actiondate');
-            // const elemCaDate = document.createElement('p');
-            // elemCaDate.setAttribute('class', 'actiondate2');
-            const elemCC = document.createElement('p');
-            elemCC.setAttribute('class', 'help');
+
             const aiDate = document.createElement('p');
             if (record[key]['DUE_DATE'] === null) {
                 aiDate.textContent = 'Request Date:' + ' ' + record[key]['INPUT_DATE'].substring(0, 10) + '\n';
@@ -82,7 +79,13 @@ button.addEventListener('click', async (event) => {
             // toggle display of doit if recur id is not null
             const doit = document.querySelector('#doit');
             if (record[key]['RECUR_ID'] !== null) {
+                const scanners = ['05TE', '07TE', '08TE'];
                 doit.style.display = 'block';
+                if (scanners.includes(record[key]['SUBJECT'])) {
+                    const scanit = document.createElement('p');
+                    scanit.textContent = 'Scan, file form, toss this paper.';
+                    doit.appendChild(scanit);
+                }
                 console.log('recur id is not null');
             } else {
                 doit.style.display = 'none';
@@ -132,7 +135,6 @@ button.addEventListener('click', async (event) => {
             detailSection.appendChild(aiProj);
             detailSection.appendChild(reqBy);
             detailSection.appendChild(aiSubject);
-            // detailSection.appendChild(aiProj);
 
             ncTrendTitle.textContent = 'Action:';
             elemDesc.textContent = record[key]['INPUT_TEXT'];
@@ -153,15 +155,9 @@ button.addEventListener('click', async (event) => {
             // replace the line breaks with <br> elements
             elemResponse.innerHTML = elemResponse.innerHTML.replace(/\n/g, '<br>');
 
-            // // Manage the closed checkbox
-            // const closed = document.createElement('checkbox');
-            // // get the value of the checkbox
-            // const closedValue = record[key]['CLOSED'];
-            // console.log(closedValue);
-
             main.appendChild(elemRpt);
             main.appendChild(elemId);
-            main.appendChild(detailSection);
+            // main.appendChild(detailSection);
 
             detailSection.appendChild(ncTrendTitle);
             detailSection.appendChild(elemDesc);
@@ -173,8 +169,53 @@ button.addEventListener('click', async (event) => {
             detailSection.appendChild(elemResponse);
 
             detailSection.appendChild(controlTextTitle);
-            // detailSection.appendChild(elemCaDate);
-            detailSection.appendChild(elemCC);
+
+            // add form for entry of values
+            let data_collectors = ['05TE', '07TE', '08TE'];
+            if (data_collectors.includes (record[key]['SUBJECT'])) {
+                console.log('in data collectors');
+                let characteristics = [];
+                switch (record[key]['SUBJECT']) {
+                    case '05TE':
+                        characteristics = ['Deox mL', 'Free Acid mL', 'Temp F'];
+                        break;
+                    case '07TE':
+                        characteristics = ['Free Acid mL', 'Iron content','Temp F'];
+                        break;
+                    case '08TE':
+                        // code block
+                        break;
+                    default:
+                        // code block
+                }
+                // create a form for the data collector
+                const collectionform = document.createElement('collectionform');
+                collectionform.setAttribute('id', 'collectionform');
+                // iterate through the characteristics and create input fields
+                for (const key in characteristics) {
+                    const elemCharacteristics = document.createElement('input');
+                    elemCharacteristics.setAttribute('type', 'text');
+                    elemCharacteristics.setAttribute('id', characteristics[key]);
+                    elemCharacteristics.setAttribute('name', characteristics[key]);
+                    elemCharacteristics.setAttribute('value', characteristics[key]);
+                    collectionform.appendChild(elemCharacteristics);
+                }
+                // create a submit button
+                const submit = document.createElement('input');
+                submit.setAttribute('type', 'submit');
+                submit.setAttribute('value', 'Submit');
+                collectionform.appendChild(submit);
+                
+                
+                try {
+                    detailSection.appendChild(collectionform);
+                }
+                catch (e) {
+                    console.log('no characteristics form');
+                }
+                
+            }
+
             main.appendChild(detailSection);
         }
     });
@@ -262,14 +303,6 @@ modalsave.addEventListener('click', async (event) => {
         default:
             console.log('default');
     }
-    // console.log(typeof closed)
-    // if (closed.checked) {
-    //         data = { ...data, CLOSED: "Y"}
-    //     } else {
-    //         data = { ...data, CLOSED: "N"}
-    //     }
-
-    // console.log(data);
 
     const options = {
         method: 'PUT',
@@ -322,9 +355,7 @@ closeaction.addEventListener('click', async (event) => {
     const response = await fetch(url, options);
     const json = await response.json();
     // console.log(json);
-    alert('Record updated');
-    // modal.close();
-    // refresh the page
+    // alert('Record updated');
     const button = document.getElementById('actiondetailsearch');
     button.click();
 });

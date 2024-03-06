@@ -447,6 +447,10 @@ h3 {
     .entryform {
         display: none;
     }
+    #collectionform {
+        display: none;
+    }
+
     #main-nav {
         display: none;
     }

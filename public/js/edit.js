@@ -114,21 +114,22 @@ button.addEventListener('click', async (event) => {
             caType.textContent = 'Type:' + ' ' + record[key]['TYPE'];
             caType.setAttribute('class', 'tbl');
            
-
+            // Create the text area headings
             const ncTrendTitle = document.createElement('h3');
             ncTrendTitle.setAttribute('class', 'header3');
             const followupTitle = document.createElement('h3');
             followupTitle.setAttribute('class', 'header3');
             const responseTitle = document.createElement('h3');
             responseTitle.setAttribute('class', 'header3');
-            const controlTextTitle = document.createElement('h3');
             const linebreak = document.createElement('br');
 
+            // Create the main header and id elements
             elemRpt.textContent = 'Action Item Detail';
             elemRpt.setAttribute('class', 'header');
             elemId.textContent = 'Action Id: ' + record[key]['INPUT_ID'];
             elemId.setAttribute('class', 'header2');
 
+            // Apend fields to the detail section
             detailSection.appendChild(aiDate);
             detailSection.appendChild(caAssTo);
             detailSection.appendChild(aiClosedDate);
@@ -167,8 +168,6 @@ button.addEventListener('click', async (event) => {
 
             detailSection.appendChild(responseTitle);
             detailSection.appendChild(elemResponse);
-
-            detailSection.appendChild(controlTextTitle);
 
             // add form for entry of values
             let data_collectors = ['05TE', '07TE', '08TE'];
@@ -245,8 +244,6 @@ modalsave.addEventListener('click', async (event) => {
     if (aidValue.length === 0) {
         alert('Please enter the Input ID');
     } else {
-        // console.log(aidValue);
-        // console.log(aidValue.length);
         while (aidValue.length < 7) {
             aidValue = '0' + aidValue;
         }

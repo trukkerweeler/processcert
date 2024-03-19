@@ -16,9 +16,10 @@
     <h1>Detail - Edit</h1>
     <form>
         <label for="search">Enter Action Id:</label>
-        <input type="text" name="search" id="iid" value="281">
+        <input type="text" name="search" id="iid" value="349">
         <button type="submit" id="actiondetailsearch">Search</button>
         <button type="submit" id="editaction" disabled>Append</button>
+        <button type="submit" id="collectBtn" disabled>Collect Data</button>
         <button type="submit" id="closeaction">Close</button>
     </form>
     <div id="stamp">
@@ -29,7 +30,7 @@
         <div>Append field - choose field:</div>
         <form class="appendmodal">
             <select name="fieldname" id="fieldname">
-                <option value="FOLLOWUP_TEXT" selected>Follow up</option>
+                <option value="FOLLOWUP_TEXT" >Follow up</option>
                 <option value="RESPONSE_TEXT" selected>Response</option>
             </select>
             
@@ -41,7 +42,11 @@
         </form>
         <button data-close-modal>Close</button>
     </dialog>
-
+    <dialog data-collect-modal>
+        <h3>Data Entry</h3>
+        <form id="collectform" action="">
+        </form>
+    </dialog>
     <main id="main">
         
     </main>

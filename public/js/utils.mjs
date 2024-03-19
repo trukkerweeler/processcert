@@ -44,3 +44,24 @@ export function getDateTime() {
   
     return `${year}-${month}-${dayOfMonth} ${hours}:${minutes}:${seconds}`;
   }
+
+// return form fields for data entry
+export function getFormFields(myform) {
+    let data = [];
+    switch (myform) {
+      case "csr":
+        data = ["CUSTOMER_ID", "UNIT", "VALUE"];
+        for (entryfield in data) {
+          console.log(entryfield);
+        }
+      case "output":
+        return ["output_id", "output_name", "output_description", "output_date", "output_time"];
+      case "defect":
+        return ["defect_id", "defect_name", "defect_description", "defect_date", "defect_time"];
+      case "user":
+        return ["user_id", "user_name", "user_email", "user_password"];
+      default:
+        return [];
+    }
+    return data;
+  }

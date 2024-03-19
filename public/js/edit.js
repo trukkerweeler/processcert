@@ -1,4 +1,4 @@
-import { loadHeaderFooter, getUserValue, getDateTime } from './utils.mjs';
+import { loadHeaderFooter, getUserValue, getDateTime, getFormFields } from './utils.mjs';
 
 loadHeaderFooter();
 const user = await getUserValue();
@@ -8,6 +8,7 @@ const iid = document.querySelector('#iid');
 const caidValue = iid.value;
 
 const editbutton = document.getElementById('editaction');
+const collectBtn = document.getElementById('collectBtn');
 const closebutton = document.getElementById('closeaction');
 
 const button = document.getElementById('actiondetailsearch');
@@ -65,6 +66,7 @@ button.addEventListener('click', async (event) => {
             const aiSubject = document.createElement('p');
             aiSubject.textContent = 'Subject:' + ' ' + record[key]['SUBJECT'];
             aiSubject.setAttribute('class', 'tbl');
+            aiSubject.setAttribute('id', 'subject');
 
             const aiClosedDate = document.createElement('p');
             if (record[key]['CLOSED_DATE'] === null || record[key]['CLOSED_DATE'] === '' || record[key]['CLOSED_DATE'].length === 0) {
@@ -220,6 +222,8 @@ button.addEventListener('click', async (event) => {
     });
     // toggle enable/disable of the edit button
     editbutton.disabled = false;
+    collectBtn.disabled = false;
+    
     // closebutton.disabled = true;
 });
 
@@ -316,7 +320,98 @@ modalsave.addEventListener('click', async (event) => {
     modal.close();
 });
 
-// close action item
+// collect action modal=======================================
+// collect action modal=======================================
+const collectModal = document.querySelector('[data-collect-modal]');
+// open modal on button click
+collectBtn.addEventListener('click', (event) => {
+    event.preventDefault();
+    const mySubjectValue = getFormFields(document.querySelector('#subject').value)
+    console.log(mySubjectValue);
+        
+
+    const collectform = document.getElementById('collectform');
+    
+    // First input element
+    const cid = document.createElement('input');
+    cid.setAttribute('id', 'CUSTOMER_ID');
+    cid.setAttribute('name', 'CUSTOMER_ID');
+    cid.setAttribute('type', 'text');
+    // cid.setAttribute('value', 'CUSTOMER_ID');
+    collectform.appendChild(cid);
+
+    // Second input element
+    const myUnit = document.createElement('input');
+    myUnit.setAttribute('id', 'CUSTOMER_ID');
+    myUnit.setAttribute('name', 'CUSTOMER_ID');
+    myUnit.setAttribute('type', 'text');
+    collectform.appendChild(myUnit);
+
+    // Create cancel button
+    const cmCancel = document.createElement('button')
+    cmCancel.setAttribute('id', 'collect-cancel');
+    cmCancel.textContent = 'Cancel';
+    collectform.appendChild(cmCancel);
+
+    // Create save button
+    const cmSave = document.createElement('button')
+    cmSave.setAttribute('id', 'collectsave');
+    cmSave.textContent = 'Save';
+    collectform.appendChild(cmSave);
+
+    // show the collect modal
+    collectModal.showModal();
+    
+    // hide the modal on cancel button click
+    const collectCancel = document.getElementById('collect-cancel');
+    collectCancel.addEventListener('click', () => {
+        collectModal.close();
+    });
+    
+    const collectSave = document.getElementById('collectsave');
+    collectSave.addEventListener('click', async (event) => {
+        event.preventDefault();
+        const iid = document.querySelector('#iid');    
+        let aidValue = iid.value;
+        if (aidValue.length === 0) {
+            alert('Please enter the Input ID');
+        } else {
+            while (aidValue.length < 7) {
+                aidValue = '0' + aidValue;
+            }
+        }
+        
+        const url = 'http://localhost:3003/csr/' + aidValue;
+        // console.log(url);
+        
+        let data = {
+            INPUT_ID: aidValue,
+            INPUT_USER: getUserValue(),
+        };
+        const d = new Date();
+        const date = d.toISOString().substring(0, 10);
+        const time = d.toLocaleTimeString();
+        const mydate = date + ' ' + time;
+        
+        const options = {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        };
+        
+        const response = await fetch(url, options);
+        const json = await response.json();
+        const button = document.querySelector('[data-collect-close-modal]');
+        button.click();
+        collectModal.close();
+    }
+    );
+});
+    
+    
+    // close action item
 const closeaction = document.getElementById('closeaction');
 closeaction.addEventListener('click', async (event) => {
     event.preventDefault();

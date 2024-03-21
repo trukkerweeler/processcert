@@ -56,6 +56,8 @@ router.get('/', (req, res) => {
 
 });
 
+
+
 // Get the next ID for a new record
 router.get('/nextId', (req, res) => {
     // res.json('0000005');
@@ -77,7 +79,7 @@ router.get('/nextId', (req, res) => {
         const query = 'SELECT CURRENT_ID FROM SYSTEM_IDS where TABLE_NAME = "PEOPLE_INPUT"';
         connection.query(query, (err, rows, fields) => {
             if (err) {
-                console.log('Failed to query for attendance: ' + err);
+                console.log('Failed to query for people input: ' + err);
                 res.sendStatus(500);
                 return;
             }
@@ -90,7 +92,7 @@ router.get('/nextId', (req, res) => {
         connection.end();
         });
     } catch (err) {
-        console.log('Error connecting to Db 83');
+        console.log('Error connecting to Db 93');
         return;
     }
 });

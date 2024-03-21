@@ -18,3 +18,9 @@ Content-Type: application/json
     "username": "TKENT",
     "password": "$2b$10$lwOzJ"
 }
+
+###
+GET http://localhost:3003/csr/nextId
+
+###
+GET http://localhost:3003/input/nextId

@@ -179,6 +179,8 @@ body {
 
 } */
 
+
+
 #main-nav ul{
     /* position: relative; */
     /* overflow: hidden; */
@@ -426,8 +428,23 @@ h3 {
     display: none;
 }
 
+.header {
+    margin-bottom: 0px;
+}
+
+.header2 {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
 .header3 {
     padding-bottom: 0px;
+
+}
+
+.section {
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
 
 #logo {
@@ -437,6 +454,37 @@ h3 {
 #header {
     margin: auto;
     width: 100%;
+}
+
+dialog {
+    border-radius: 1rem;
+}
+
+dialog form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+    margin-bottom: 25px;    
+
+}
+
+button {
+    padding: 0.5rem;
+    border: none;
+    border-radius: var(--border-radius);
+    background-color: var(--text-color);
+    color: var(--text-color-light);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    height: 32px;
+}
+
+input {
+    font-size: 24px;
+    border-radius: var(--border-radius);
+    padding: 0;
 }
 
 

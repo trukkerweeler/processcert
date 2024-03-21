@@ -16,7 +16,7 @@ const defaultDueDate = document.getElementById('DUE_DATE');
 defaultDueDate.value = myDueDateDefault;
 
 // Send a POST request
-const form = document.querySelector('form');
+const form = document.querySelector('#entryform');
 form.addEventListener('submit', async (event) => {
     event.preventDefault();
     const data = new FormData(form);

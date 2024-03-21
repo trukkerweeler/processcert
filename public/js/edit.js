@@ -2,6 +2,8 @@ import { loadHeaderFooter, getUserValue, getDateTime, getFormFields } from './ut
 
 loadHeaderFooter();
 const user = await getUserValue();
+let inputUrl = 'http://localhost:3003/input/';
+let csrurl = 'http://localhost:3003/csr/';
 
 const main = document.querySelector('main');
 const iid = document.querySelector('#iid');
@@ -14,6 +16,8 @@ const closebutton = document.getElementById('closeaction');
 const button = document.getElementById('actiondetailsearch');
 button.addEventListener('click', async (event) => {
     event.preventDefault();
+    let inputUrl = 'http://localhost:3003/input/';
+
     const iid = document.querySelector('#iid');    
     let aidValue = iid.value;
     if (aidValue.length === 0) {
@@ -24,7 +28,7 @@ button.addEventListener('click', async (event) => {
         }
     }
 
-    const url = 'http://localhost:3003/input/' + aidValue;
+    const url = inputUrl + aidValue;
 
     // Delete the child nodes of the main element
     while (main.firstChild) {
@@ -334,6 +338,10 @@ collectBtn.addEventListener('click', (event) => {
     
     // First input element
     const cid = document.createElement('input');
+    const cidLabel = document.createElement('label');
+    cidLabel.setAttribute('for', 'CUSTOMER_ID');
+    cidLabel.textContent = 'Customer ID';
+    collectform.appendChild(cidLabel);
     cid.setAttribute('id', 'CUSTOMER_ID');
     cid.setAttribute('name', 'CUSTOMER_ID');
     cid.setAttribute('type', 'text');
@@ -345,7 +353,33 @@ collectBtn.addEventListener('click', (event) => {
     myUnit.setAttribute('id', 'CUSTOMER_ID');
     myUnit.setAttribute('name', 'CUSTOMER_ID');
     myUnit.setAttribute('type', 'text');
+    const myUnitLabel = document.createElement('label');
+    myUnitLabel.setAttribute('for', 'UNIT');
+    myUnitLabel.textContent = 'Unit';
+    collectform.appendChild(myUnitLabel);
     collectform.appendChild(myUnit);
+
+    // Third input element
+    const myValue = document.createElement('input');
+    myValue.setAttribute('id', 'VALUE');
+    myValue.setAttribute('name', 'VALUE');
+    myValue.setAttribute('type', 'text');
+    const myValueLabel = document.createElement('label');
+    myValueLabel.setAttribute('for', 'VALUE');
+    myValueLabel.textContent = 'Value';
+    collectform.appendChild(myValueLabel);
+    collectform.appendChild(myValue);
+
+    // Fourth input element - Collection date
+    const myDate = document.createElement('input');
+    myDate.setAttribute('id', 'COLLECTION_DATE');
+    myDate.setAttribute('name', 'COLLECTION_DATE');
+    myDate.setAttribute('type', 'date');
+    const myDateLabel = document.createElement('label');
+    myDateLabel.setAttribute('for', 'COLLECTION_DATE');
+    myDateLabel.textContent = 'Collection Date';
+    collectform.appendChild(myDateLabel);
+    collectform.appendChild(myDate);
 
     // Create cancel button
     const cmCancel = document.createElement('button')
@@ -381,7 +415,7 @@ collectBtn.addEventListener('click', (event) => {
             }
         }
         
-        const url = 'http://localhost:3003/csr/' + aidValue;
+        const url = csrurl + aidValue;
         // console.log(url);
         
         let data = {
@@ -427,7 +461,7 @@ closeaction.addEventListener('click', async (event) => {
         }
     }
 
-    const url = 'http://localhost:3003/input/close/' + aidValue;
+    const url = inputUrl + 'close/' + aidValue;
     // console.log(url);
 
     let data = {

@@ -41,7 +41,7 @@ button.addEventListener('click', async (event) => {
     fetch(url, { method: 'GET' })
     .then(response => response.json())
     .then(record => {
-        // console.log(record);
+
         for (const key in record) {
             const detailSection = document.createElement('section');
             detailSection.setAttribute('class', 'section');
@@ -134,8 +134,12 @@ button.addEventListener('click', async (event) => {
             elemRpt.setAttribute('class', 'header');
             elemId.textContent = 'Action Id: ' + record[key]['INPUT_ID'];
             elemId.setAttribute('class', 'header2');
+            const collectBtn = document.createElement('button');
+            collectBtn.setAttribute('id', 'collectBtn');
+            collectBtn.textContent = 'Collect Data';
 
-            // Apend fields to the detail section
+
+            // Append fields to the detail section
             detailSection.appendChild(aiDate);
             detailSection.appendChild(caAssTo);
             detailSection.appendChild(aiClosedDate);
@@ -164,6 +168,7 @@ button.addEventListener('click', async (event) => {
 
             main.appendChild(elemRpt);
             main.appendChild(elemId);
+            main.appendChild(collectBtn);
             // main.appendChild(detailSection);
 
             detailSection.appendChild(ncTrendTitle);
@@ -222,14 +227,145 @@ button.addEventListener('click', async (event) => {
             }
 
             main.appendChild(detailSection);
-        }
+
+// collect action modal=======================================
+// collect action modal=======================================
+const collectModal = document.querySelector('[data-collect-modal]');
+// open modal on button click
+collectBtn.addEventListener('click', (event) => {
+    event.preventDefault();        
+
+    const collectform = document.getElementById('collectform');
+    
+    // First input element
+    const cid = document.createElement('input');
+    const cidLabel = document.createElement('label');
+    cidLabel.setAttribute('for', 'CUSTOMER_ID');
+    cidLabel.textContent = 'Customer ID';
+    collectform.appendChild(cidLabel);
+    cid.setAttribute('id', 'CUSTOMER_ID');
+    cid.setAttribute('name', 'CUSTOMER_ID');
+    cid.setAttribute('type', 'text');
+    // cid.setAttribute('value', 'CUSTOMER_ID');
+    collectform.appendChild(cid);
+
+    // Second input element
+    const myUnit = document.createElement('input');
+    myUnit.setAttribute('id', 'UNIT');
+    myUnit.setAttribute('name', 'UNIT');
+    myUnit.setAttribute('type', 'text');
+    const myUnitLabel = document.createElement('label');
+    myUnitLabel.setAttribute('for', 'UNIT');
+    myUnitLabel.textContent = 'Unit';
+    collectform.appendChild(myUnitLabel);
+    collectform.appendChild(myUnit);
+
+    // Third input element
+    const myValue = document.createElement('input');
+    myValue.setAttribute('id', 'VALUE');
+    myValue.setAttribute('name', 'VALUE');
+    myValue.setAttribute('type', 'text');
+    const myValueLabel = document.createElement('label');
+    myValueLabel.setAttribute('for', 'VALUE');
+    myValueLabel.textContent = 'Value';
+    collectform.appendChild(myValueLabel);
+    collectform.appendChild(myValue);
+
+    // Fourth input element - Collection date
+    const myDate = document.createElement('input');
+    myDate.setAttribute('id', 'SAMPLE_DATE');
+    myDate.setAttribute('name', 'SAMPLE_DATE');
+    myDate.setAttribute('type', 'date');
+    const myDateLabel = document.createElement('label');
+    myDateLabel.setAttribute('for', 'SAMPLE_DATE');
+    myDateLabel.textContent = 'Collection Date';
+    collectform.appendChild(myDateLabel);
+    collectform.appendChild(myDate);
+
+    // Create cancel button
+    const cmCancel = document.createElement('button')
+    cmCancel.setAttribute('id', 'collect-cancel');
+    cmCancel.textContent = 'Cancel';
+    collectform.appendChild(cmCancel);
+
+    // Create save button
+    const cmSave = document.createElement('button')
+    cmSave.setAttribute('id', 'collectsave');
+    cmSave.textContent = 'Save';
+    collectform.appendChild(cmSave);
+
+    // show the collect modal
+    collectModal.showModal();
+    
+    // hide the modal on cancel button click
+    const collectCancel = document.getElementById('collect-cancel');
+    collectCancel.addEventListener('click', () => {
+        collectModal.close();
     });
+    
+    const collectSave = document.getElementById('collectsave');
+    collectSave.addEventListener('click', async (event) => {
+        event.preventDefault();
+        // console.log(csrurl + 'nextCSRid')
+        let responseNextId = await fetch( csrurl + 'nextCSRid', { method: 'GET' })
+        let nextCSRId = await responseNextId.json();
+        // prepend with 0's to 7 digits
+        nextCSRId = nextCSRId.toString();
+        while (nextCSRId.length < 7) {
+            nextCSRId = '0' + nextCSRId;
+        }
+        // console.log(nextCSRId);
+        
+        let aidValue = document.querySelector('#iid').value;
+        if (aidValue.length === 0) {
+            alert('Please enter the Input ID');
+        } else {
+            while (aidValue.length < 7) {
+                aidValue = '0' + aidValue;
+            }
+        }
+        
+        const url = csrurl + nextCSRId;
+        
+        let data = {
+            COLLECTION_ID: nextCSRId,
+            INPUT_ID: aidValue,
+            INPUT_USER: await getUserValue(),
+        };
+        const d = new Date();
+        const date = d.toISOString().substring(0, 10);
+        const time = d.toLocaleTimeString();
+        // const mydate = date + ' ' + time;
+
+        const myCustomer = document.getElementById('CUSTOMER_ID').value;
+        const myUnit = document.getElementById('UNIT').value;
+        const myValue = document.getElementById('VALUE').value;
+        const myDate = document.getElementById('SAMPLE_DATE').value + ' ' + time;
+
+        data = {...data, CUSTOMER_ID: myCustomer, UNIT: myUnit, VALUE: myValue, SAMPLE_DATE: myDate};
+        
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        };
+        
+        const response = await fetch(url, options);
+        const json = await response.json();
+        // const button = document.querySelector('[data-collect-close-modal]');
+        // button.click();
+        collectModal.close();
+    }
+    );
+});
+        }
+    // });
     // toggle enable/disable of the edit button
     editbutton.disabled = false;
-    collectBtn.disabled = false;
-    
-    // closebutton.disabled = true;
-});
+
+
 
 const modal = document.querySelector('[data-modal]');
 // open modal on edit button click
@@ -324,125 +460,7 @@ modalsave.addEventListener('click', async (event) => {
     modal.close();
 });
 
-// collect action modal=======================================
-// collect action modal=======================================
-const collectModal = document.querySelector('[data-collect-modal]');
-// open modal on button click
-collectBtn.addEventListener('click', (event) => {
-    event.preventDefault();
-    const mySubjectValue = getFormFields(document.querySelector('#subject').value)
-    console.log(mySubjectValue);
-        
 
-    const collectform = document.getElementById('collectform');
-    
-    // First input element
-    const cid = document.createElement('input');
-    const cidLabel = document.createElement('label');
-    cidLabel.setAttribute('for', 'CUSTOMER_ID');
-    cidLabel.textContent = 'Customer ID';
-    collectform.appendChild(cidLabel);
-    cid.setAttribute('id', 'CUSTOMER_ID');
-    cid.setAttribute('name', 'CUSTOMER_ID');
-    cid.setAttribute('type', 'text');
-    // cid.setAttribute('value', 'CUSTOMER_ID');
-    collectform.appendChild(cid);
-
-    // Second input element
-    const myUnit = document.createElement('input');
-    myUnit.setAttribute('id', 'CUSTOMER_ID');
-    myUnit.setAttribute('name', 'CUSTOMER_ID');
-    myUnit.setAttribute('type', 'text');
-    const myUnitLabel = document.createElement('label');
-    myUnitLabel.setAttribute('for', 'UNIT');
-    myUnitLabel.textContent = 'Unit';
-    collectform.appendChild(myUnitLabel);
-    collectform.appendChild(myUnit);
-
-    // Third input element
-    const myValue = document.createElement('input');
-    myValue.setAttribute('id', 'VALUE');
-    myValue.setAttribute('name', 'VALUE');
-    myValue.setAttribute('type', 'text');
-    const myValueLabel = document.createElement('label');
-    myValueLabel.setAttribute('for', 'VALUE');
-    myValueLabel.textContent = 'Value';
-    collectform.appendChild(myValueLabel);
-    collectform.appendChild(myValue);
-
-    // Fourth input element - Collection date
-    const myDate = document.createElement('input');
-    myDate.setAttribute('id', 'COLLECTION_DATE');
-    myDate.setAttribute('name', 'COLLECTION_DATE');
-    myDate.setAttribute('type', 'date');
-    const myDateLabel = document.createElement('label');
-    myDateLabel.setAttribute('for', 'COLLECTION_DATE');
-    myDateLabel.textContent = 'Collection Date';
-    collectform.appendChild(myDateLabel);
-    collectform.appendChild(myDate);
-
-    // Create cancel button
-    const cmCancel = document.createElement('button')
-    cmCancel.setAttribute('id', 'collect-cancel');
-    cmCancel.textContent = 'Cancel';
-    collectform.appendChild(cmCancel);
-
-    // Create save button
-    const cmSave = document.createElement('button')
-    cmSave.setAttribute('id', 'collectsave');
-    cmSave.textContent = 'Save';
-    collectform.appendChild(cmSave);
-
-    // show the collect modal
-    collectModal.showModal();
-    
-    // hide the modal on cancel button click
-    const collectCancel = document.getElementById('collect-cancel');
-    collectCancel.addEventListener('click', () => {
-        collectModal.close();
-    });
-    
-    const collectSave = document.getElementById('collectsave');
-    collectSave.addEventListener('click', async (event) => {
-        event.preventDefault();
-        const iid = document.querySelector('#iid');    
-        let aidValue = iid.value;
-        if (aidValue.length === 0) {
-            alert('Please enter the Input ID');
-        } else {
-            while (aidValue.length < 7) {
-                aidValue = '0' + aidValue;
-            }
-        }
-        
-        const url = csrurl + aidValue;
-        // console.log(url);
-        
-        let data = {
-            INPUT_ID: aidValue,
-            INPUT_USER: getUserValue(),
-        };
-        const d = new Date();
-        const date = d.toISOString().substring(0, 10);
-        const time = d.toLocaleTimeString();
-        const mydate = date + ' ' + time;
-        
-        const options = {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        };
-        
-        const response = await fetch(url, options);
-        const json = await response.json();
-        const button = document.querySelector('[data-collect-close-modal]');
-        button.click();
-        collectModal.close();
-    }
-    );
-});
     
     
     // close action item
@@ -485,3 +503,6 @@ closeaction.addEventListener('click', async (event) => {
     const button = document.getElementById('actiondetailsearch');
     button.click();
 });
+    });
+}
+);

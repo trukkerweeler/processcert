@@ -21,8 +21,6 @@ router.post('/:aid', (req, res) => {
                 console.error('Error connecting: ' + err.stack);
                 return;
             }
-        // console.log('Connected to DB');
-        console.log(req.body);   
              
         const query = `insert into NINETYONETWENTY (COLLECT_ID
             , INPUT_ID
@@ -39,8 +37,6 @@ router.post('/:aid', (req, res) => {
                 , '${req.body.SAMPLE_DATE}'
                 , '${req.body.INPUT_USER}'
             )`;
-        
-        console.log(query);
 
         connection.query(query, (err, rows, fields) => {
             if (err) {
@@ -52,7 +48,6 @@ router.post('/:aid', (req, res) => {
         });
 
         const updateQuery = `UPDATE SYSTEM_IDS SET CURRENT_ID = '${req.params.aid}' WHERE TABLE_NAME = 'NINETYONETWENTY'`;
-        console.log(updateQuery);
 
         connection.query(updateQuery, (err, rows, fields) => {
             if (err) {
@@ -75,8 +70,7 @@ router.post('/:aid', (req, res) => {
 
 
 // Get the next ID for a new record
-router.get('/nextId', (req, res) => {
-    // res.json('0000005');
+router.get('/nextCSRId', (req, res) => {
     try {
         const connection = mysql.createConnection({
             host: process.env.DB_HOST,
@@ -90,7 +84,6 @@ router.get('/nextId', (req, res) => {
                 console.error('Error connecting: ' + err.stack);
                 return;
             }
-        // console.log('Connected to DB');
 
         const query = 'SELECT CURRENT_ID FROM SYSTEM_IDS where TABLE_NAME = "NINETYONETWENTY"';
         connection.query(query, (err, rows, fields) => {

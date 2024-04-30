@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="js node test page.">
+    <meta name="author" content="This page authored by timokent">
+    <link  rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Abel&family=Tapestry&display=swap">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" href="images/ci-logo.png">
+    <title>Specifications</title>
+</head>
+<body>
+    <header id="header"></header>
+    <h1>Add Process to Product</h1>
+    <main id="main">
+        <form action="submit" name="form" id="entryform" class="dataentry">
+            <label for="PRODUCT_ID">Part Number</label>
+            <input type="text" name="PRODUCT_ID" id="PRODUCT_ID" placeholder="Enter part number" value="6461-101">
+            <div></div>
+            <!-- <label for="BOM_PRODUCT_ID">Part Number (Subcomponent)</label>
+            <input type="text" name="BOM_PRODUCT_ID" id="BOM_PRODUCT_ID" placeholder="Enter subcomponent part number"> -->
+            <section class="process-card">
+                <h2 class="allrows">Heat Treat</h2>
+                <h3 class="twocols">Specifications</h3>
+                <input type="checkbox" name="AMS2770" value="AMS2770" id="AMS2770">
+                <label for="AMS2770">AMS 2770</label>
+                <input type="checkbox" name="AMS2772" value="AMS2772" id="AMS2772">
+                <label for="AMS2772">AMS 2772</label>
+            </section>
+            <section class="process-card">
+                <h2 class="allrows">Welding</h2>
+                <h3 class="twocols">Specifications</h3>
+                <input type="checkbox" name="AWS-D1.1CB" value="AWS-D1.1CB" id="AWS-D1.1CB">
+                <label for="AWS-D1.1CB">AWS-D1.1 Class B</label>
+                <input type="checkbox" name="AWS-D1.2" value="AWS-D1.2" id="AWS-D1.2">
+                <label for="AWS-D1.2">AWS-D1.2</label>
+                <div></div>
+                <input type="checkbox" name="D171MC" value="D171MC" id="D171MC">
+                <label for="D171MC">AWS D17.1/D17.1M Class C</label>
+                <div></div>
+                <input type="checkbox" name="D172MC" value="D172MC" id="D172MC">
+                <label for="D172MC">AWS D17.2/D17.2M Class C</label>
+                <div></div>
+                <input type="checkbox" name="MILW8604" value="MILW8604" id="MILW8604">
+                <label for="MILW8604">MIL-W-8604</label>
+            </section>
+            <section class="process-card">
+                <h2 class="allrows">Chemical Processing</h2>
+                <h3 class="twocols">Specifications</h3>
+                    <input type="checkbox" name="5541T1C1" value="5541T1C1" id="5541T1C1">
+                    <label for="5541T1C1">MIL-C-5541 TYPE I CLASS I</label>
+                    <input type="checkbox" name="5541T1C1A" value="5541T1C1A" id="5541T1C1A">
+                    <label for="5541T1C1A">MIL-C-5541 TYPE I CLASS IA</label>
+                    <div></div>
+                    <input type="checkbox" name="5541T1C3" value="5541T1C3" id="5541T1C3">
+                    <label for="5541T1C3">MIL-DTL-5541 TYPE I CLASS 3</label>
+                    <div></div>
+                    <input type="checkbox" name="5541T2C3" value="5541T2C3" id="5541T2C3">
+                    <label for="5541T2C3">MIL-DTL-5541 TYPE II CLASS 3</label>
+                <!-- </div> -->
+            </section>
+            <section class="process-card">
+                <h2 class="allrows">Painting</h2>
+                <h3 class="twocols">Specifications</h3>    
+                <input type="checkbox" name="MIL-PRF-23377" value="MIL-PRF-23377" id="MIL-PRF-23377">
+                <label for="MIL-PRF-23377">MIL-PRF-23377</label>
+                <input type="checkbox" name="MIL-PRF-85285" value="MIL-PRF-85285" id="MIL-PRF-85285">
+                <label for="MIL-PRF-85285">MIL-PRF-85285</label>
+                <div></div>
+                <input type="checkbox" name="WASHPRIM" value="WASHPRIM" id="WASHPRIM">
+                <label for="WASHPRIM">Wash Primer</label>
+            </section>
+                
+            <input type="submit" value="Submit" id="bosbutton">
+
+        </form>
+    </main>
+    <footer id="footer"></footer>
+</body>
+<script type="module" src="/js/partspec.js"></script>
+</html>

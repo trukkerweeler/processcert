@@ -36,6 +36,12 @@ app.use("/csr", csrRoutes);
 const bomRoutes = require("./routes/bom");
 app.use("/bom", bomRoutes);
 
+const bosRoutes = require("./routes/bos");
+app.use("/bos", bosRoutes);
+
+const certRoutes = require("./routes/cert");
+app.use("/cert", certRoutes);
+
 app.listen(port, async() => {
   // console.log(`Example app listening at http://localhost:${port}`);
 });

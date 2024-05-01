@@ -27,3 +27,15 @@ GET http://localhost:3003/input/nextId
 
 ###
 GET http://localhost:3009/bom/6461-02-1891R
+
+###
+POST http://localhost:3009/bos
+Content-Type: application/json
+
+{
+    "PRODUCT_ID": "6461-101",
+    "AMS2770": "AMS2770"
+}
+
+###
+GET http://localhost:3009/cert/6461-02-1891R

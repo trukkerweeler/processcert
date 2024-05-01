@@ -1,7 +1,7 @@
 import { loadHeaderFooter } from './utils.mjs';
 loadHeaderFooter();
 
-const url = 'http://localhost:3009/bos';
+const url = 'http://localhost:3009/bos/';
 
 let myRequestDate = new Date();
 myRequestDate.setDate(myRequestDate.getDate());
@@ -13,25 +13,31 @@ myDueDateDefault = myDueDateDefault.toISOString().slice(0, 10);
 
 // Send a POST request
 const form = document.querySelector('#bosbutton');
-form.addEventListener('submit', async (event) => {
+form.addEventListener('click', async (event) => {
     event.preventDefault();
+
+    const form = document.querySelector('#entryform');
+    // Iterate through passed parameters
     const data = new FormData(form);
-    // array the values for the checked boxes
-    const checkedValues = [];
-    for (const checkbox of data.getAll('partspec')) {
-        checkedValues.push(checkbox);
-    }
-    console.log(checkedValues);
     
     const dataJson = {};
+    let myspecs = [];
     for (let field of data.keys()) {
         // console.log(field);
+        if (field === 'PRODUCT_ID') {
+            dataJson[field] = data.get(field);
+        }
+        else {
+            myspecs.push(data.get(field));
+        }
         
     }
+    dataJson['BOS_SPECIFICATION'] = myspecs;
     
-    console.log(dataJson);
+    // console.log(dataJson);
 
     try {
+        // console.log(url, dataJson)
         await fetch(url, {
             method: 'POST',
             headers: {

@@ -111,7 +111,7 @@ router.get('/:pid', (req, res) => {
             }
         // console.log('Connected to DB');
 
-        const query = `select * from PRODUCT_BOM where PRODUCT_ID = '${req.params.pid}'`;
+        const query = `select pb.PRODUCT_ID, pb.BOM_PRODUCT_ID, ps.BOS_SPECIFICATION_ID from PRODUCT_BOM pb left join PRODUCT_BOS ps on pb.BOM_PRODUCT_ID = ps.PRODUCT_ID where pb.PRODUCT_ID = '${req.params.pid}'`;
 
         // console.log(query);
 

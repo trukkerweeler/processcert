@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="js node test page.">
-    <meta name="author" content="This page authored by timokent">
+    <meta name="author" content="This page authored by tim ok">
     <link  rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Abel&family=Tapestry&display=swap">
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="icon" href="images/ci-logo.png">
@@ -18,14 +18,24 @@
         <label for="search">Enter Product Id:</label>
         <input type="text" name="search" id="pid" value="6461-02-1891R">
         <button type="submit" id="certsearch">Search</button>
-        <!-- <button type="submit" id="editaction" disabled>Append</button> -->
-        <!-- <button type="submit" id="collectBtn" disabled>Collect Data</button> -->
-        <!-- <button type="submit" id="closeaction">Close</button> -->
     </form>
-    <main id="main">
+    <form id="tracefile" action="">
+        <label for="trace">Choose Trace File:</label>
+        <input type="file" name="trace" id="trace">        
+    </form>
+    <button type="submit" id="lots">Apply</button>
+    <main id="main"></main>
+    <p></p>
+    <div class="certstatement">
+        <p>I certify that the materials listed were processed in conformance with the specifications shown and the latest drawing revisions on record.</p>
+        <p id="signatory"></p>
+        <p">Quality Assurance
+
+        </p>
+        <p id="sigdate">Date</p>
+    </div>
         
-    </main>
-    <footer id="footer"></footer>
+    <p></p><footer id="footer"></footer>
 </body>
 <script type="module" src="/js/cert.js"></script>
 </html>

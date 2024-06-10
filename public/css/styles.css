@@ -482,9 +482,28 @@ section {
         grid-column: span 3;
     }
 
+.linespecdetails {
+        margin-top: 2px;
+        margin-bottom: 2px;
+    }
+.linespecgroup {
+        /* margin-top: 0px; */
+        margin-bottom: 0px;
+        padding-bottom: 0px;
+    }
+#signatory {
+        margin-top: 3rem;
+        margin-bottom: 0px;
+        padding-bottom: 0px;
+        border-bottom: #000 1px solid;
+        max-width: 400px;
+    }
 
 
 @media print {
+    h1 {
+        display: none;
+    }
     form{
         display: none;
     }
@@ -508,5 +527,22 @@ section {
     }
     #inspectiondate {
         display: block;
+    }
+
+    a[href]:after {
+        content: none !important;
+    }
+    @page {
+        size: auto;
+        margin-bottom: 0;
+        margin-top: 0;
+             }
+    
+    body {
+        padding-top: 72px;
+        padding-bottom: 72px ;
+            }
+    footer {
+        display: none;
     }
 }

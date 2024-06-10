@@ -32,6 +32,14 @@ export async function getUserValue() {
     return data.user;
   }
 
+  // get process alias value from processalias.json file
+export async function getProcessAlias(processcode) {
+    const res = await fetch("../json/processalias.json");
+    const data = await res.json();
+    let alias = data[processcode];
+    return alias;
+  }
+
   // return datetime in format YYYY-MM-DD HH:MM:SS
 export function getDateTime() {
     const date = new Date();

@@ -1,0 +1,8 @@
+{
+  "C5541T1C3": {"description":"MIL-C-5541 Ty. 1 Cl. 3","group":"CHEM"},
+  "C5541T1C1": {"description":"MIL-C-5541 Ty. 1 Cl. 1","group":"CHEM"},
+  "AMSH6088": {"description":"AMS-H-6088","group":"HEAT"},
+  "H2595": {"description":"Hollingsead H2595","group":"SWLD"},
+  "MILW6858": {"description":"MIL-W-6858","group":"SWLD"},
+  "AMS2772": {"description":"AMS 2772","group":"HEAT"}
+}

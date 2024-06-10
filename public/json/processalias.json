@@ -1,0 +1,8 @@
+{
+  "CHEM": "Chemical Conversion Coating",
+  "HEAT": "Heat treat",
+  "SWLD": "Spot Welding",
+  "WLD": "Welding",
+  "PASS": "Passivation",
+  "PAINT": "Painting"
+}
